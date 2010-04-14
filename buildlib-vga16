@@ -1,0 +1,7 @@
+#!/bin/sh
+
+./configure \
+    --disable-static \
+    --disable-newgal \
+    --enable-vga16gal \
+    --disable-nativegal

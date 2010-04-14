@@ -1,0 +1,24 @@
+#!/bin/sh
+
+./configure \
+    --disable-lite \
+    --enable-flatstyle \
+    --disable-newgal \
+    --disable-micemoveable \
+    --disable-cursor \
+    --disable-fblin32 \
+    --disable-vbfsupport \
+    --disable-qpfsupport \
+    --disable-ttfsupport \
+    --disable-type1support \
+    --disable-latin9support \
+    --disable-gbksupport \
+    --disable-big5support \
+    --disable-unicodesupport \
+    --disable-savebitmap \
+    --disable-jpgsupport \
+    --disable-pngsupport \
+    --disable-imegb2312 \
+    --disable-imegb2312py \
+    --disable-aboutdlg \
+    --disable-savescreen

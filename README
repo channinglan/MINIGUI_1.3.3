@@ -1,0 +1,508 @@
+NAME
+    MiniGUI - a compact cross-platform Graphics User Interface support system 
+              for real-time embedded systems.
+
+
+TABLE OF CONTENTS
+    1. Introduction
+    2. New features of MiniGUI version 1.3
+    3. New featrues of MiniGUI version 1.5
+    4. Installation
+    5. Known bugs and limitations
+    6. History
+    7. About the authors
+    8. If you have a problem
+    9. Copying
+    10. If you are developing commercial or proprietary software by using MiniGUI
+
+
+1. INTRODUCTION
+    
+    MiniGUI is a GPLed free software project, led and maitained by
+    Feynman Software (Beijing Feynman Software Technology Co., Ltd.).
+
+    It aims to provide a fast, stable, lightweight, and cross-platform  
+    Graphics User Interface support system, which is especially fit for 
+    real-time embedded systems based-on Linux/uClinux, eCos, uC/OS-II, and so on.
+
+    MiniGUI defines a set of light windowing and GDI (Grahpics Device 
+    Interface) APIs for applications. By using them, an application can create 
+    multiple windows and/or controls, and can draw in these windows/controls 
+    without interfering the others.
+
+    MiniGUI is composed of three libiraries: libminigui (source is in src/), 
+    libmgext (ext/), and libvcongui (vcongui/). Libminigui is the core library, 
+    which provides windowing and graphics interfaces as well as standard controls. 
+    Libmgext is an extension library of libminigui and provides some 
+    useful controls and convenient user interface functions, such as 
+    `Open File Dialog Box'. Libvcongui provides a virtual console window 
+    in which you can run programs in character mode.
+
+    You can configure and compile MiniGUI as one of three run-time modes:
+
+    * `MiniGUI-Threads': A program running on MiniGUI-Threads can create
+      multiple cascaded windows in different threads, and all the windows
+      belong to a single process. MiniGUI-Threads is fit for some real-time
+      systems with simple functionality.
+
+    * `MiniGUI-Lite': A program running on MiniGUI-Lite is an independent 
+      process, which can also create multiple windows. MiniGUI-Lite is fit for 
+      some complex embedded systems, such as PDAs, Thin-Clients or STBs.
+
+    * `MiniGUI-Standalone': A single process version of MiniGUI.
+
+    Currently, the latest stable release of MiniGUI is version 1.5.2, the 
+    latest public release (the freely downloadable release) is version 1.3.3. 
+    And the latest developing version of MiniGUI is version 2.0.x (in the works).
+    You can find latest information about MiniGUI and download the source from 
+    our home page:
+    
+    http://www.minigui.com
+    http://www.minigui.org
+
+
+2. NEW FEATURES OF MINIGUI VERSION 1.3
+
+    MiniGUI version 1.3 offers the following new features:
+
+    * In-core resources. You can compile the resources (bitmaps, icons, 
+      and fonts) into the library (libminigui), and there is no need to read 
+      the resource configuration information from MiniGUI.cfg.
+
+    * MiniGUI-Standalone. You can configure and compile MiniGUI as 
+      MiniGUI-Standalone version.
+
+    * Support for uClinux. We optimized MiniGUI for uClinux.
+
+    * Support for eCos. 
+
+    * Support for skin. You can now use skin to build your
+      dashy UI.
+
+    * Useful configuration interface. You can configure MiniGUI by 
+      using 'make menuconfig' command, which gives you a very 
+      easy-to-use interface to configure MiniGUI.
+
+
+3. NEW FEATRUES OF MINIGUI VERSION 1.5
+
+    MiniGUI version 1.5 offers the following new features:
+
+    * Provide support for uC/OS-II operating system. 
+      MiniGUI now can run on Linux/uClinux, eCos, and uC/OS-II operating system.
+
+    * More controls. Transparent style, ScrollView and ScrollWnd controls, 
+      Grid control, and enhanced SLEdit and MLEDIT control.
+
+    * Enhanced GDI APIs providing support for advanced 2D graphics functions, 
+      lick pen-width, pen-style, and brush-pattern.
+
+    * Many bugs fixed.
+
+    By now, MiniGUI version 1.5.x is only released through MiniGUI 
+    commercial license. 
+
+
+4. INSTALLATION
+
+
+  4.1 Before Installation
+
+    1) Choose an engine.
+
+    If your Linux kernel supports FrameBuffer, you can use our built-in
+    graphics engine -- the Native fbcon engine. So there is no need to install
+    other graphics engines mentioned below. 
+
+    The Native engine can support both MiniGUI-Threads and MiniGUI-Lite.
+    Note that the Native engine can not provide good support for 
+    `fbvga16' (the standard VGA 16-Color mode).  And also note that 
+    the Native engine can only run on Linux FrameBuffer.
+
+    If your Linux kernel does not support FrameBuffer, you can use
+    SVGALib as your graphics engine. SVGALib is an old library which
+    accesses the video chipset directly. So if you use SVGALib, you 
+    should get the root privilege to run a program in order that SVGALib
+    can do I/O operations directly.
+
+    Note that SVGALib can not provide native support for most popular 
+    video cards.  However, if your video chipset is VESA-compliant, SVGALib 
+    can run well on it by using VESA BIOS 2.0. Most video chipsets are 
+    VESA-compliant, but some not (for example, the Intel i810 chipset).
+
+    You can use LibGGI as the engine as well. LibGGI is a new graphics
+    library for Linux, and it can run well on Linux FrameBuffer. The most
+    important advantage using LibGGI is that the applications based-on 
+    LibGGI can run on X Window, not only on Linux FrameBuffer console, 
+    and re-compilation of application is not needed.
+
+    Note that SVGALib and LibGGI can not be used to support MiniGUI-Lite.
+
+    If you are an MiniGUI application developer, you can use QVFB as
+    your engine. QVFB is a virtual framebuffer program base-on Qt. It
+    can run on X Window. 
+
+    2) Install the engine.
+
+    If you want to use our Native engine, there is no need to install
+    a specific library. The Native engine is built in MiniGUI.
+
+    If you want to use SVGALib as your graphics engine, please download 
+    the latest svgalib-1.4.3 from our HTTP site:
+    
+    http://www.minigui.com/edownload.shtml
+
+    and then install these libraries in your system.  This may override your
+    old SVGALib, but it will do no harm to your system.
+
+    If you want to use LibGGI as your graphics engine, please download the
+    latest GGI source from http://www.ggi-projects.org and install it.
+    You can also download it from our site: 
+
+    http://www.minigui.com/edownload.shtml
+
+    3) Download MiniGUI tarballs
+
+    After having installed a graphics engine, please download the following 
+    tarballs from our site and extract them:
+
+        * libminigui-1.3.x.tar.gz: the source of MiniGUI libraries, including
+          libminigui, libmgext, and libvcongui.
+
+        * minigui-res-1.3.x.tar.gz: the resource used by MiniGUI, including
+          basic fonts, icons, bitmaps, cursors, and imetables.
+
+        * mde-1.3.x.tar.gz: the demos for MiniGUI Version 1.3.x.
+
+    Note that the tarballs needed by the current MiniGUI release are
+    listed in "Version" file. Please make sure you have installed correct tarballs.
+
+
+  4.2 Installing resource files of MiniGUI
+
+    We must install resource files of MiniGUI first. Please follow
+    the steps below to do it:
+
+        1) Use `tar' to extract minigui-res-1.3.x.tar.gz. You can use 
+           the following command:
+
+           $ tar zxf minigui-res-1.3.x.tar.gz
+
+        2) Change to new directory and run `make' as a super user:
+
+           $ su -c make install
+
+
+  4.3 Configure and compile MiniGUI
+
+    MiniGUI uses `automake' and `autoconf', so configuration and compilation
+    of MiniGUI are very easy:
+
+        1) Use `tar' to extract `libminigui-1.3.x.tar.gz' to a new directory:
+
+           $ tar zxf libminigui-1.3.x.tar.gz
+
+        2) Change to the new directory and run `./configure':
+
+           $ ./configure
+
+        3) Run the following commands to compile and install MiniGUI:
+
+           $ make; su -c 'make install';
+
+        4) By default, libraries of MiniGUI will be installed in `/usr/local/lib'. 
+           You should make sure that this directory is listed in `/etc/ld.so.conf' 
+           file. And after having installed them, you should run 
+           the following command to update the cache of shared library system:
+
+           $ su -c ldconfig
+
+        5) If you want to specify which features MiniGUI provides, you 
+           can run
+
+           $ ./configure --help
+
+           to see the complete configuration options listed, then disable or 
+           enable some features by using command line switches. For example, 
+           if you do not want MiniGUI to load JPEG pictures via the function 
+           LoadBitmap, you can use 
+
+           $ ./configure --disable-jpgsupport
+
+        6) Note that some features of MiniGUI depend on other libraries.
+           Please make sure that you have installed them.
+
+
+  4.4 Run demos of MiniGUI
+
+    If you have installed MiniGUI version 1.1.xx or later, you should use 
+    our new demo system called `MDE'. 'MDE' is a comprehensive demostration 
+    environment for MiniGUI version 1.3.x, more pretty and useful.
+
+    Before running the demo programs, you should extract these tarballs 
+    and compile them:
+
+        1) Extract the tarball to a new directory by using `tar' command.
+
+        2) Run `./configure' and `make' to compile the demos. If you have
+           configured and installed MiniGUI as `MiniGUI-Threads', please
+           use the following configuration option:
+
+            ./configure --disable-lite
+
+        3) Try to run demos and applications. 
+
+        4) If you compiled and installed MiniGUI as `MiniGUI-Lite', 
+           you should first run a server program, and then run other demos. 
+           Building MDE will create a program called `mginit', which is the
+           server providing a virtual console on MiniGUI-Lite:
+
+            $ cd mginit
+            $ ./mginit
+
+        5) If you compiled and installed MiniGUI as `MiniGUI-Threads', 
+           you can run the program directly. As an example, you can go to 
+           `mde-1.3.x/same/' to run `same':
+
+            $ cd same
+            $ ./same
+
+  4.5 Little FAQ 
+
+    1) Can I run MiniGUI on my PC box only with STD VGA 16-color mode supported?
+
+       Yes, you can. But you should use MiniGUI version 1.1.0Pre2 or later, and
+       choose the new GAL and GDI. Both MiniGUI-Lite and MiniGUI-Threads can 
+       run on our VGA16 GAL engine.
+
+    2) Which engine should choose for my embedded system which is not 
+       x86-compliant?
+
+       For a no x86-compliant embedded system, such as ARM, StrongARM, MIPS,
+       or PowerPC based system, the only engine on which MiniGUI can run is 
+       Native engine. Porting SVGALib and LibGGI to such a system is a very
+       difficult work -- do not try to do this.
+
+    3) Does MiniGUI offer the support for grey LCD with 4bpp (bits per pixel)?
+
+       Yes, it offers. It even offers the support for 1bpp and 2bpp LCD. 
+       However, you should use the old GAL and GDI, not the new GAL and GDI.
+
+
+5. KNOWN BUGS AND LIMITATIONS
+
+
+  ^o^ When using our Native engine...
+
+    The Native engine is the only engine on which MiniGUI-Lite runs. In 
+    MiniGUI-Lite, if you run MiniGUI applications on a PC box, you must 
+    use <Right-Ctrl>+F1...F6 to switch out from MiniGUI to other virtual 
+    consoles. 
+
+
+  ^o^ When using QVFB engine...
+
+    The keyboard handling of QVFB engine has bugs. It can not handle
+    the SHIFT keys correctly.
+
+
+  ^o^ When using SVGA library as the graphics engine...
+
+    There are two engines based on SVGA library. One is called SVGALib, 
+    which defines GAL engine and IAL engine at the same time, and you can not
+    use a different IAL engine with SVGALib GAL engine, and vice versa. The
+    other engine based on SVGA library is called "VGA16".
+
+    MiniGUI-Lite can not run on SVGALib engine. After version 1.1.0Pre1, 
+    MiniGUI-Lite and MiniGUI-Threads can both run on the new GAL engine 
+    -- VGA16. You can use our Native IAL engine with VGA16 GAL engine. 
+
+    In SVGALib engine, because we use the vgagl functions, MiniGUI can only
+    run in the 256 color mode or higher color modes and no mode-X. Although
+    MiniGUI can run in 16 color (4-planar) modes via our "VGA16" engine, 
+    the 256c and high/true color modes are the preferable ones.
+
+    Both of SVGA library and LinuxThread use the SIGUSR1 and SIGUSR2, so it is 
+    dangerous to use the two libraries in one application. Therefore, if you use
+    SVGALib or VGA16 as your engine of MiniGUI, you should make sure that SVGA 
+    library uses other SIGNALs which are not used, such as:
+    
+        SIGUSR1 -> SIGUNUSED
+        SIGUSR2 -> SIGSTKFLT
+
+    If you use SVGA library version 1.4.3 or later, you are not needed to 
+    modify the source.
+
+    For some VESA-compliant video cards, you can use the VESA driver
+    of SVGA library. To enable a VESA driver, please edit the 
+    /etc/vga/libvga.config, and add a line:
+
+        Chipset VESA
+
+    or delete the first comment character '#'.
+
+    When use SVGALib or VGA16 engines, applications based on MiniGUI do need 
+    superuser privilege to set vedio mode and operate the I/O ports.
+
+    NOTE: When use SVGALib, please disable any mouse acceleration in 
+    /etc/vga/libvga.config.
+
+
+  ^o^ When using LibGGI as the graphics engine...
+
+    MiniGUI-Lite can not run on this engine.
+
+    You may encounter `core dump' with LibGGI because LibGGI does not have 
+    any stable version. 
+
+
+6. HISTORY
+
+    Three years have pasted since MiniGUI was initially created at the end of
+    1998, and now it becomes much reliable and stable. During the past years, 
+    many remarkable changes have taken place in the MiniGUI project.
+
+    At the original, the version 0.2.xx was based on SVGALib and PThread 
+    (LinuxThreads). Then the version 0.3.xx had many enhanced features 
+    including Graphics Abstract Layer (GAL), Input Abstract Layer (IAL), 
+    and the support for multiple charsets and multiple fonts. 
+
+    In version 1.0.00, we designed MiniGUI-Lite, which was more fit for 
+    some complex embedded systems, such as PDAs, Thin-Clients, or STBs. 
+    MiniGUI-Lite made the embedded systems more stable and efficient. 
+    The version 1.0.00 provided the Native engine based on Linux 
+    FrameBuffer device directly as well. 
+
+    In the developing version 1.1.00 of MiniGUI, we re-wrote the GAL and GDI 
+    interfaces, and provided some advanced video features, such as raster 
+    operation, transparent blitting, alpha blending, and video hardware 
+    acceleration. We also provided some important GDI functions, such as 
+    Ellipse, Arc, Polygon, and FloodFill.
+
+    A brief history description of the developement progress lay below:
+
+        0)  1994 ~ 1996:    MiniGUI DOS version.
+        1)  Dec, 1998:      Began to write.
+        2)  Apr, 1999:      The skeleton of MiniGUI, windowing sub-system 
+                            and basic graphics device interfaces.
+        3)  May, 1999:      Timer, menu, and the sekleton of control sub-system.
+        4)  Jun, 1999:      Chinese input method (by Kang Xiaoning).
+        5)  July, 1999:     GIF and JPG loading support (by LI Zhuo).
+        6)  Aug, 1999:      Some standard controls (Portion by Zhao Jianghua).
+        7)  Sep, 1999:      Dialog boxes and message boxes.
+        8)  Sep, 1999:      Snapshot of screen or window.
+        9)  Jan., 2000:     VCOnGUI (Virtual Console on MiniGUI) version 0.2.02.
+        10) Mar., 2000:     Linux distribution installer based-on MiniGUI for 
+                            HappyLinux 1.0.
+        11) Jun., 2000:     Began to develop version 1.0.xx.
+        12) Sep., 2000:     MiniGUI version 0.3.06 released.
+        13) Oct., 2000:     MiniGUI version 0.9.00 released. 
+        14) Nov., 2000:     MiniGUI version 0.9.96 released. 
+        15) Jan., 2001:     MiniGUI version 0.9.98 released. You can build 
+                            MiniGUI-Lite from this version.
+        16) Jan., 2001:     MiniGUI version 1.0.00Beta1 released.
+        17) Feb., 2001:     MiniGUI version 1.0.00Pre1 released.
+        18) Apr., 2001:     MiniGUI version 1.0.00 released (2001/04/16).
+        18) Sep., 2001:     MiniGUI version 1.1.0Pre1 released (2001/09/12).
+        19) Sep., 2001:     MiniGUI version 1.0.9 released (2001/09/17), 
+                            this will be the last version of
+                            source branch 1.0.x. 
+        20) Oct., 2001:     MiniGUI version 1.1.0Pre4 released (2001/10/22). 
+                            This version have new GAL and GDI interfaces.
+        21) Mar., 2002:     MiniGUI official version 1.1.0 released (2002/03/08). 
+                            MiniGUI API Reference documentation version 0.9 released.
+        22) Mar., 2002:     MiniGUI API Reference documentation version 1.0 released.
+        23) Apr., 2002:     MiniGUI the new stable version 1.2.0 released (2002/04/11). 
+        24) Sep., 2002:     The main developers of MiniGUI founded a new software 
+                            corporation: Beijing Feynman Software Technology Co., Ltd..
+                            And the development and maintenance of MiniGUI changes from 
+                            loosely-knit team to business organization.
+        25) Mar., 2003:     MiniGUI official version 1.2.5 released (2003/03/23).
+        25) May., 2003:     MiniGUI official version 1.2.6 released (2003/05/18).
+        26) Sep., 2003:     MiniGUI official version 1.3.1 released (2003/09/11).
+
+
+7. ABOUT THE AUTHORS
+
+    The author of MiniGUI is Wei Yongming. He lives in Beijing, P.R.China. 
+    You can contact him by:
+    
+    email: ymwei@minigui.org
+
+    or browse our home page:
+
+    http://www.minigui.com
+    http://www.minigui.org
+
+    The latest source and dependent libraries of MiniGUI can be found at:
+    
+    http://www.minigui.com/download/index.shtml
+    http://www.minigui.com/download/3rdparty.shtml
+
+    For other authors, see CREDITS.
+
+
+8. IF YOU HAVE A PROBLEM
+
+    We have built two mailing lists for MiniGUI project. If you have
+    any problem, advice or comment, please send a message to the
+    mailing lists. Note that you should subscribe the mailing lists
+    first, then you will have right to send messages to the mailing
+    lists.
+
+    * minigui-users: the mailing list for MiniGUI Generic Users.
+      Please visit
+
+            http://lists.minigui.net/cgi-bin/mailman/listinfo/minigui-users
+
+      to subscribe it.
+
+    * minigui-devel: the mailing list for MiniGUI Application Developers.
+      Please visit
+
+            http://lists.minigui.net/cgi-bin/mailman/listinfo/minigui-devel
+
+      to subscribe it.
+
+    * minigui-ecos: the mailing list for eCos + MiniGUI users.
+      Please visit:
+
+            http://lists.minigui.net/cgi-bin/mailman/listinfo/minigui-ecos
+
+
+9. COPYING
+
+    Copyright (C) 2002, 2003, 2004, Beijing Feynman Software Technology Co., Ltd.
+    Copyright (C) 1998, 1999, 2000, 2001, 2002, Wei Yongming
+    Portion copyright (C) 2000, 2001, Song Lixin, Zheng Xiang and others.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+10. IF YOU ARE DEVELOPING COMMERCIAL OR PROPRIETARY SOFTWARE BY USING MINIGUI
+
+    The edition you downloaded freely from our site may only be used to 
+    develop GPL (non-proprietary) Software. The COPYING file explains 
+    what you may or may not do with the free edition.
+
+    If you are using MiniGUI for developing commercial, proprietary, or other
+    software not covered by the terms listed in the COPYING file, you
+    must have a commercial license for MiniGUI. Please see
+    http://www.minigui.com/product/index.html for how to obtain this. 
+
+    If you are interested in the commercial MiniGUI licensing, please write
+    to sales@minigui.com.  Other mail can be sent to support@minigui.com.
+
+

@@ -1,0 +1,23 @@
+The features will be in MiniGUI version 2.0.x.
+=============================================
+
+1. A good architecture to support clients/server-based MiniGUI.
+   We need to rewrite the underlay code of MiniGUI-Lite.
+
+   The MiniGUI version 2.0.x can be built to one of the following 
+   run-time versions:
+
+        - MiniGUI-Standalone:   Standalone version.
+        - MiniGUI-Threads:      Threads version.
+        - MiniGUI-Complete:     A complete clients/server-based version.
+
+2. Support windows/controls layout theme.
+
+3. Add C++ class library for MiniGUI in MiniGUI Foundation Classes 
+   library (another MFC).
+
+4. Runing Mesa3D/OpenGL on MiniGUI.
+
+5. Resource management. Dynamically load resources, include strings, 
+   menus, and dialog box templates.
+

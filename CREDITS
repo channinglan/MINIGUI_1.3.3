@@ -1,0 +1,139 @@
+    This is at least a partial credits-file of people that have
+    contributed to the MiniGUI project. It is sorted by name, and
+    formatted in a format that allows for easy grepping and
+    beautification by scripts. The fields are: name (N), time (T), 
+    email (E),web-address (W), description (D) and snail-mail address (S). 
+    Thanks,
+
+        WEI Yongming
+
+----------
+N: Armix
+E: armix@263.net
+T: 2002
+D: Alternative of Dummy IAL engine and general touch screen support.
+
+N: Chen Lei
+E: leon@minigui.org
+T: 2000 ~ 2002
+D: Enhancement of Multiple-Line Editor (MEDIT) control.
+D: Document and some sample application, like `notebook'.
+D: The enhanced native engine for coordinates conversion.
+
+N: Feng Dake
+E: minx@thtfchain.com
+T: 2000
+D: Fix some bugs of Multiple-Line Editor control.
+D: The original author of `notebook'.
+D: The author of `controlpanel'.
+D: Fix some bugs in Static control.
+D: Fix some bugs in handling of ETC files.
+
+N: Gong Xiaorui
+E: glory@263.net
+T: 1999
+D: Document and some sample application.
+
+N: Hu Ying
+T: 2002
+D: English version of README file.
+
+N: Jiang Jun
+E: kevin@minigui.org
+T: 1999 ~ 2002
+D: The original author of Property Sheet control.
+D: The original author of multi-line edit control.
+D: The original author of shared resource module of MiniGUI-Lite.
+D: The original author of some GAL/IAL engines for specific Embedded Systems.
+
+N: Kang Xiaoning
+E: kxn@263.net
+T: 1999
+D: The original author of GB2312 input methods and accelarators.
+
+N: Kevin GH Lai
+E: g.h.lai@263.net
+T: 2000
+D: The original author of subcontrol support.
+
+N: Li Zhuo
+T: 1999
+D: The original author of JPG and GIF images support.
+
+N: Liu Gang
+E: gfaxman@21cn.com
+W: http://gfaxman.sourceforge.net
+D: The author of "progman" for MiniGUI. 
+   The code is not included in official release.
+
+N: Qiu Feng
+E: coolqiufeng@sina.com.cn
+T: 2000
+D: The original support for ISO8859-5 charset.
+
+N: Richard Cai
+T: 2000
+D: The original 32bpp FB driver for Native GAL Engine.
+
+N: Shu Ming
+T: 2001
+D: The author of LISTVIEW control.
+D: Enhancement of TREEVIEW control.
+D: Part of API Reference Documentation.
+
+N: Song Lixin
+T: 2000
+D: Russia Block game.
+D: Native graphics and input engines for old GAL.
+D: Adobe Type1 font support.
+
+N: Xu Fanglong
+E: xufanglong@263.net
+T: 2000
+D: The original author of Toolbar control.
+D: The origianl support for EUCKR and UJIS charsets support.
+
+N: Yu Yijun
+T: 2001
+D: English version of README file.
+
+N: Zhang Yunfan
+E: kerberos@minigui.org
+T: 2000
+D: GIF animation support in MiniGUIExt library.
+D: The original author of SpinBox control.
+
+N: Zhao Jianghua
+T: 1999
+D: Some controls were written originally by Zhao Jianghua.
+
+N: Zheng Xiang
+E: zx@minigui.org
+T: 1999 ~ 2003
+D: Official sample programs, such as minesweeper clone.
+D: The PinYin IME module.
+D: The IME maintainer.
+
+N: Zheng Yiran
+E: zhengyiran@263.net
+T: 2000
+D: The original author of TrackBar control.
+D: The original author of TreeView control.
+
+N: Zhong Shuyi
+E: snig@minigui.org
+T: 2000 ~ 2002
+D: The author of MonthCalendar control.
+D: Part of API Reference Documentation.
+
+N: Wang Jian
+T: 1999
+D: The original author of COMBOBOX and COOLBAR controls.
+
+N: Wei Yongming
+T: 1998 ~ 2003
+E: ymwei@minigui.org
+W: http://www.minigui.org
+D: Core coding man.
+D: API reference documentation.
+

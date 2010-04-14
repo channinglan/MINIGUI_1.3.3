@@ -1,0 +1,416 @@
+名称
+
+    MiniGUI - 面向实时嵌入式 Linux 系统的小型跨操作系统图形用户界面支持系统
+
+
+目录
+    1. 介绍
+    2. MiniGUI 版本 1.3 的新功能特点
+    3. MiniGUI 版本 1.5 的新功能特点
+    4. 在 Linux PC 机上的安装
+    5. 安装及配置示例
+    6. 已知臭虫和限制
+    7. 开发历史
+    8. 有关作者
+    9. 如果遇到问题
+    10. 版权信息
+    11. 在商业或专有系统中使用 MiniGUI
+
+
+1. 介绍
+    
+    MiniGUI 是一个遵循 GPL 条款的自由软件项目. 该项目由北京飞漫软件技术
+    有限公司主持.
+
+    MiniGUI 的目标是提供一个快速, 稳定, 轻量级的跨平台图形用户界面支持系统, 
+    尤其适合基于 Linux/uClinux, eCos, uC/OS-II 等操作系统的实时嵌入式系统.
+
+    MiniGUI 为应用程序定义了一组轻量级的窗口和图形设备接口. 利用这些接口, 
+    每个应用程序可以建立多个窗口, 而且可以在这些窗口中绘制图形, 且互不影响.
+    用户也可以利用 MiniGUI 建立菜单, 按钮, 列表框等常见的 GUI 元素.
+
+    MiniGUI 由三个函数库组成: libminigui, libmgext 以及 libvcongui.
+    libminigui 是提供窗口管理和图形接口的核心函数库, 也提供了大量的标准控件; 
+    libmgext 是 libminigui 的一个扩展库, 提供了一些有用的控件, 同时提供了一些
+    方便而且有用的用户界面函数, 比如 "文件打开" 对话框; libvcongui 则提供了
+    一个应用程序可用的虚拟控制台窗口, 从而可以方便地在 MiniGUI 环境中运行
+    字符界面的应用程序.
+
+    用户可以将 MiniGUI 配置成 "MiniGUI-Threads" 或者 " MiniGUI-Lite".
+    运行在 MiniGUI-Threads 上的程序可以在不同的线程中建立多个窗口, 但所有
+    的窗口在一个进程中运行. 相反, 运行在 MiniGUI-Lite 上的每个程序是单独
+    的进程, 每个进程也可以建立多个窗口. MiniGUI-Threads 适合于具有单一
+    功能的实时系统, 而 MiniGUI-Lite 则适合于类似于 PDA, STB 和瘦客户机
+    的复杂嵌入式系统.
+
+    用户还可将 MiniGUI V1.3.x 编译成单进程的版本，该版本下的应用程序可
+    单独执行，而不需首先运行 mginit 程序。
+
+    MiniGUI 的最新稳定版是版本 1.5.2; 最新的公开发布版本是 1.3.3; 
+    最新开发版是版本 2.0.x. 您可以在我们的主页上找到最新的 MiniGUI 相关信息:
+    
+    http://www.minigui.org
+
+    2002 年 9 月, 由 MiniGUII 的主要开发者创立的北京飞漫软件技术有限公司成立,
+    MiniGUI 的开发主持和维护工作从松散组织转向商业机构. 
+    相关信息可从如下站点获得:
+
+    http://www.minigui.com
+
+
+2. MiniGUI 版本 1.3 的新功能特点
+
+    MiniGUI 1.3 版本中增加了如下新的功能特色:
+
+    * 我们可以将 MiniGUI 所使用的资源, 诸如位图, 图标和字体等编译到函数库中, 
+      这样 MiniGUI 的运行就不需要在文件系统中单独存放资源文件了, 包括
+      MiniGUI.cfg 配置文件在内, 而且将提高 MiniGUI 的初始化速度. 这个特性非常
+      适合 uClinux 操作系统.
+
+    * 我们可以将 MiniGUI 配置成以单进程形式运行的版本, 也就是说, 如果您的
+      系统足够简单, 则可以不需要线程支持或者 mginit 程序.
+
+    * 我们针对 uClinux 优化了 MiniGUI 的内存使用.
+
+    * 提供了对 eCos 操作系统的支持。
+
+    * 提供了界面的皮肤支持, 可帮助您编写华丽的用户界面.
+
+    * 我们现在可以使用 make menuconfig 来配置 MiniGUI, 从而提供给您非常
+      便利的配置和定制界面.
+
+
+3. MiniGUI 版本 1.5 的新功能特点
+
+    MiniGUI 1.5 版本中增加了如下新的功能特色:
+
+    * 更多操作系统支持. 包括普通嵌入式 Linux/uClinux, eCos, uC/OS-II 等。
+
+    * 提供了高级二维绘图函数, 可以设置线宽, 线型, 填充模式等。
+
+    * 更多硬件开发板支持. 包括 Intel DMG 机顶盒, Sigma Designs  
+      RealMagic 机顶盒, S3C2410 开发板, 华恒 ARM2410 开发板,
+      WinBond SVPxx 可视电话等等.
+
+    * 更多控件支持. 包括透明控件支持, ScrollView 和 ScrollWnd 控件, 增强
+      编辑框控件及网格控件等。
+
+    目前, MiniGUI 1.5 版本仅通过 MiniGUI 商业授权发布, 您购买了 MiniGUI 
+    商业授权之后, 即可获得最新的 MiniGUI 1.5 版本源代码.
+
+
+4. 安装
+
+  4.1 安装前的准备
+
+    1) 选择图形引擎
+
+    如果您的 Linux 内核支持 FrameBuffer, 则可以使用内建于 MiniGUI 的
+    图形引擎 -- 即 "私有引擎". 这样, 就没有必要安装下面提到的其它图形
+    函数库作为 MiniGUI 的图形引擎了. 而且, Native 引擎是唯一支持 MiniGUI-Lite
+    的引擎, 如果您要将 MiniGUI 配置为 MiniGUI-Lite, 也没有必要安装
+    其它的图形库作为引擎.
+
+    Native 引擎既可以支持 MiniGUI-Threads, 也可以支持 MiniGUI-Lite. 需要
+    注意的是, Native 引擎目前还不能提供对 "fbvga16" (标准 VGA 16 色模式)
+    的良好支持. 而且需要注意 Native 引擎目前只能运行在 Linux FrameBuffer
+    之上. 
+
+    如果您的 Linux 内核不支持 FrameBuffer, 则可以使用 SVGALib 作为图形
+    引擎. SVGALib 是一种直接访问图形芯片的老的图形函数库. 因此, 如果
+    使用 SVGALib, 则需要获得 root 权限才能让 MiniGUI 程序支持进行
+    图形芯片的 I/O 操作.
+
+    需要注意的是, 因为 SVGALib 是一种老的图形库, 所以不能对大部分流行
+    的显示卡提供良好支持. 然而, 如果您的显示芯片是 VESA 兼容的, 则
+    SVGALib 可以通过 VESA BIOS 2.0 提供的接口良好运行. 许多显示芯片都是
+    VESA 兼容的, 但某些不是, 比如 Intel 的 i810 芯片组.
+
+    你也可以使用 LibGGI 作为 MiniGUI 的图形引擎. LibGGI 是一种新的面向
+    Linux 的图形引擎, 它也可以稳定地运行在 Linux FrameBuffer 之上. 最
+    主要的是, 运行在 LibGGI 之上的应用程序可以方便地运行在 X Window 之上,
+    而且不需要重新编译.
+
+    注意, SVGALib 和 LibGGI 不能用来支持 MiniGUI-Lite.
+
+    对于 MiniGUI 应用开发者来讲, 另外一个可选的图形引擎是 QVFB. QVFB 是
+    运行在 X Window 上的一个虚拟 FrameBuffer 程序. 利用它, 我们可以在
+    X Window 上运行和调试 MiniGUI 程序.
+
+    2) 安装引擎
+
+    如果您决定使用 Native 引擎, 则没有必要预先安装某个特定的图形库. 
+    Native 引擎已经内建于 MiniGUI 当中.
+
+    如果要使用 SVGALib 作为图形引擎, 则需要安装 "svgalib-1.4.3" 软件包. 
+    请从如下 FTP 站点下载:
+    
+    ftp://ftp.minigui.net/pub/minigui/dep-libs
+
+    或者从 HTTP 站点下载：
+
+    http://www.minigui.com/cdownload.shtml
+
+    并将上述两个软件包安装到您的系统当中. 安装过程将覆盖系统中老的 SVGALib,
+    但并不会影响您的系统.
+
+    如果您使用 LibGGI 作为图形引擎, 请从 http://www.ggi-projects.org 下载
+    最新的 GGI 源代码, 并安装之. 或者, 也可以从我们的站点上下载:
+
+    http://www.minigui.org/cdownload.shtml
+
+    3) 下载 MiniGUI
+
+    在下载并安装好图形引擎之后, 请从我们的站点上下载如下 tar.gz 软件包并解开:
+
+        * libminigui-1.3.x.tar.gz: MiniGUI 函数库源代码, 其中包括
+          libminigui, libmywins, libmgext, 和 libvcongui.
+
+        * minigui-res-1.3.x.tar.gz: MiniGUI 所使用的资源, 包括基本字体, 图标, 
+          位图和鼠标光标.
+
+        * mde-1.3.x.tar.gz: MiniGUI 的综合示例程序.
+
+  4.2 安装 MiniGUI 的资源文件
+
+    我们首先要安装 MiniGUI 的资源文件. 请按照如下步骤:
+
+        1) 使用 "tar" 命令解开 "minigui-res-1.3.x.tar.gz". 可使用如下命令:
+
+           $ tar zxf minigui-res-1.3.x.tar.gz
+
+        2) 改变到新建目录中, 然后以超级用户身份运行 "make" 命令:
+
+           $ su -c make install
+
+  4.3 配置和编译 MiniGUI
+
+    MiniGUI 使用了 "automake" 和 "autoconf" 接口, 因而 MiniGUI 的配置和编译
+    非常容易:
+
+        1) 使用 "tar" 解开 "libminigui-1.3.x.tar.gz" 到新的目录:
+
+           $ tar zxf libminigui-1.3.x.tar.gz
+
+        2) 改变到新目录, 然后运行 "./configure":
+
+           $ ./configure
+
+        3) 运行下面的命令编译并安装 MiniGUI:
+
+           $ make; su -c 'make install';
+
+        4) 默认情况下, MiniGUI 的函数库将安装在 `/usr/local/lib' 目录中. 
+           您应该确保该目录已经列在 "/etc/ld.so.conf" 文件中. 并且在安装之后,
+           要运行下面的命令更新共享函数库系统的缓存:
+
+            $ su -c ldconfig
+
+        5) 如果要控制您的 MiniGUI 提供那些功能, 则可以运行:
+
+           $ ./configure --help
+
+           查看完整的配置选项清单, 然后通过命令行开关打开或者关闭某些功能. 例如, 
+           如果您不希望 MiniGUI 使用 LoadBitmap 函数装载 JPEG 图片, 则可以使用:
+
+           $ ./configure --disable-jpgsupport
+
+        6) 注意, 某些 MiniGUI 特色依赖于其它函数库, 请确保已安装了这些函数库.
+
+
+  4.4 运行 MiniGUI 的演示程序
+
+    "mde-1.3.x.tar.gz" 中包含了 MiniGUI 的综合演示程序. 
+
+    运行之前, 应该解开并编译 mde-1.3.x.tar.gz 包:
+
+        1) 使用 "tar" 命令将软件包解开到新的目录.
+
+        2) 依次运行 "./configure" 和 "make" 编译演示程序.
+
+        4) 如果配置并安装了 MiniGUI-Lite, 则应该首先运行服务器, 然后从服务器当中
+           运行其它演示程序.  编译 MDE 将生成一个 "mginit" 程序, 该程序将提供一个
+           运行于 MiniGUI-Lite 的虚拟控制台:
+
+           $ cd mginit
+           $ ./mginit
+
+        5) 如果将 MiniGUI 配置为 MiniGUI-Threads, 则可以直接进入某个
+          演示程序目录直接运行其中的程序, 比如:
+
+           $ cd same
+           $ ./same
+
+
+5. 安装及配置示例
+
+   本示例假定用户使用的系统是 RedHat Linux 6.x 或以上发行版, 使用 Linux 内核
+   2.2.xx 或者 2.4.xx, 用户的目标是运行 MiniGUI-Threads (使用 MiniGUI 
+   Version 1.3.x). 步骤如下:
+
+   1) 确保您的 PC 机显示卡是 VESA 兼容的. 大多数显示卡是 VESA 兼容的, 然而某些
+      内嵌在主板上的显示卡可能不是 VESA 兼容的, 比如 Intel i810 系列. 如果显示
+      卡是 VESA 兼容的, 就可以使用 Linux 内核中的 VESA FrameBuffer 驱动程序了.
+
+   2) 确保您的 Linux 内核包含了 FrameBuffer 支持, 并包含了 VESA FrameBuffer 
+      驱动程序. RedHat Linux 6.x 发行版自带的内核中已经包含了该驱动程序. 如果
+      使用自己编译的内核, 请检查您的内核配置.
+
+   3) 修改 /etc/lilo.conf 文件, 在您所使用的内核选项段中, 添加如下一行:
+
+                vga=0x0317
+
+      这样, Linux 内核在启动时将把显示模式设置为 1024x768x16bpp 模式. 如果您的
+      显示器无法达到这种显示分辨率, 可考虑设置 vga=0x0314, 对应 800x600x16bpp 
+      模式.
+      
+      修改后的 /etc/lilo.conf 文件类似:
+
+                boot=/dev/hda
+                map=/boot/map
+                install=/boot/boot.b
+                prompt
+                timeout=50
+                linear
+                default=linux
+
+                image=/boot/vmlinuz-2.4.2
+                    vga=0x0317          ; 这一行设置显示模式.
+                    label=linux
+                    read-only
+                    root=/dev/hda6
+
+                other=/dev/hda1
+                    label=dos
+
+    4) 运行 lilo 命令, 使所作的修改生效, 并重新启动系统.
+
+    5) 如果一切正常, 将在 Linux 内核的引导过程中看到屏幕左上角出现可爱的 Linux
+       吉祥物 -- 企鹅, 并发现系统的显示模式发生变化.
+
+    6) 按照第 4 节所讲, 下载 libminigui-1.3.x.tar.gz, minigui-res-1.0.02.tar.gz, 
+       以及 mde-1.3.x.tar.gz 等软件包, 注意要安装正确的版本.
+
+    7) 以 root 用户身份安装 minigui-res-1.3.x.tar.gz.
+
+    8) 在某个目录下解开 libminigui-1.3.x.tar.gz, 并进入新建的 
+       libminigui-1.3.x 目录.
+
+       $ tar zxf libminigui-1.3.x.tar.gz
+       $ cd libminigui-1.3.x
+
+    9) 依次运行如下命令:
+
+       $ ./configure
+       $ make
+
+    10) 以 root 身份运行 make install 命令:
+
+       $ su -
+       # make install
+
+    11) 修改 /etc/ld.so.conf 文件, 将 /usr/local/lib 目录添加到该文件最后一行. 
+        修改后类似:
+
+                /usr/lib
+                /usr/X11R6/lib
+                /usr/i486-linux-libc5/lib
+                /usr/local/lib
+
+    12) 以 root 身份执行 ldconfig 命令:
+
+       # ldconfig
+
+    13) 在新目录中解开 mde-1.3.x.tar.gz, 并进入新建目录:
+
+       $ tar zxf mde-1.3.x.tar.gz
+       $ cd mde-1.3.x
+       
+    14) 依次运行如下命令:
+
+       $ ./configure
+       $ make
+
+    15) 进入 same 目录, 并执行 same 程序:
+
+       $ cd same
+       $ ./same
+
+    16) 如果一切正常, 这时可以看到一个虚拟控制台出现在屏幕上. 
+
+    17) 如何关闭这个窗口, 不需要在这里赘述了吧. :)
+
+
+6. 已知臭虫和限制
+
+    见 README.
+
+
+7. 开发历史
+
+    见 README.
+
+
+8. 有关作者
+
+    见 README.
+
+
+9. 如果遇到问题
+
+    我们已经在 lists.minigui.net 上建立了有关 MiniGUI 开发和编程的三个
+    邮件列表。如果 你在使用 MiniGUI 的过程中遇到任何问题，或者有任何建议或
+    评论，可以向这些邮件列表发送邮件。这样你将得到更多人的帮助。需要注意的是，
+    只有订阅了邮件列表，才能向邮件列表发送消息。
+
+    * minigui-devel: MiniGUI 应用软件开发人员的邮件列表
+      访问如下 Web 页订阅:
+
+            http://lists.minigui.net/cgi-bin/mailman/listinfo/minigui-devel
+
+    * minigui-users: MiniGUI 用户的邮件列表
+      访问如下 Web 页订阅:
+
+            http://lists.minigui.net/cgi-bin/mailman/listinfo/minigui-users
+
+    * minigui-ecos: eCos + MiniGUI 用户的邮件列表
+      访问如下 Web 页订阅:
+
+            http://lists.minigui.net/cgi-bin/mailman/listinfo/minigui-ecos
+
+
+10. 版权信息
+
+    Copyright (C) 2002, 2003, 2004, Feynman Software
+    Copyright (C) 1998, 1999, 2000, 2001, 2002, Wei Yongming
+    Portion copyright (C) 2000, 2001, Song Lixin, Zheng Xiang and others.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+11. 在商业或专有系统中使用 MiniGUI
+
+    The edition you downloaded freely from our site may only be used to 
+    develop GPL (non-proprietary) Software. The COPYING file explains 
+    what you may or may not do with the free edition.
+
+    If you are using MiniGUI for developing commercial, proprietary, or other
+    software not covered by the terms listed in the COPYING file, you
+    must have a commercial license for MiniGUI. Please see
+    http://www.minigui.com/product/index.html for how to obtain this. 
+
+    If you are interested in the commercial MiniGUI licensing, please write
+    to sales@minigui.com.  Other mail can be sent to support@minigui.com.
+

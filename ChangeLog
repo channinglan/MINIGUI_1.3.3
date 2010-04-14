@@ -1,0 +1,867 @@
+*******************************************************************************
+What's new in this version (1.3.3, 2004/01/01 ~ 2004/05/08):
+
+04/30. Fix memory leak bug of ListView Control.
+
+05/08. Update README files.
+
+05/08. Release version 1.3.3.
+
+*******************************************************************************
+What's new in this version (1.3.2, 2003/11/04 ~ 2003/12/31):
+
+11/04. Fix bug of small resolution on NEWGAL.
+
+11/06. Add IAL engine for SMDK2410 touch screen.
+
+11/21. Fix bug of SKIN and TerminateSysRes function.
+
+11/21. Tune the QVFB IAL engine.
+
+11/23. Add support for eCos, and tested on iPAQ H3600.
+
+11/23. PtInRegion, RectInRegion, and OffsetRegion are availabel for old GAL.
+
+12/01. Fix bugs in loading PCX and TGA image file.
+
+12/04. Fix bugs in OpenFileDlgBoxEx function.
+
+12/31. Release version 1.3.2.
+
+*******************************************************************************
+What's new in this version (1.3.1, 2003/09/12 ~ 2003/10/31):
+
+09/12. Add function GetNextDevFont.
+
+09/14. Fix a bug of hzinput.c for big endian systems.
+
+09/16. Fix a bug of SetValueToEtcFile function.
+
+09/16. Fix a bug of ScaleBitmap function.
+    * This bug only affects the mode of depth 8 bits.
+
+09/26. Optimize of etc file functions and system resources loading.
+    * Add LoadEtcFile and UnloadEtcFile functions.
+    * Add GetValueFromEtc, GetIntValueFromEtc, and SetValueToEtc functions.
+
+09/28. Add _FIXED_MATH condition.
+
+09/29. Use pre-compilation condition to include/exclude the incore fonts.
+
+10/13. Add APIes for skin support.
+
+10/31. Release as version 1.3.1.
+
+*******************************************************************************
+What's new in this version (1.3.0, 2003/08/01 ~ 2003/09/11):
+
+08/01. Merge modifications from branch rel-1-2-6-patches.
+
+08/01. Change license to GPL.
+
+08/01. MiniGUI will be configured as MiniGUI-Threads by default.
+
+08/01. Use g_rcScr instead of g_rcDesktop for MiniGUI-Threads.
+
+08/04. Fix bug of CreateMemDCFromBitmap.
+
+08/05. Delete no useful system bitmaps.
+
+08/06. Fix a bug of NEWTOOLBAR control.
+
+08/06. Add IAL engine for uClinux touch screen palm/mc68ez328.
+
+08/07. Make InitBitmap available for OLDGAL.
+
+08/12. Add constants definition for uClinux.
+
+08/12. Add debug messages for uClinux.
+
+08/13. Add incore resource option.
+
+08/14. Add LoadCursorFromMem and LoadIconFromMem functions.
+
+08/14. Add code for _INCORE_RES condition.
+
+08/15. Add initial code for MiniGUI-Lite StandAlone version.
+
+08/15. The MiniGUI for uClinux is almost OK. :)
+
+08/17. IAL engine for Xcopilot is OK now. :)
+
+08/25. Restore the old MiniGUI-Lite C/S code.
+
+08/25. Use the first IAL engine as the default engine.
+
+08/25. Merge changes for LISTVIEW control from branch rel-1-2-6-patches.
+
+08/25. Tune QVFB IAL engine.
+
+09/02. Remove mkmnuconfig and makefile.mnu, you can "make menuconfig" directly now.
+
+09/02. Add m68k-elf-gcc to compilers
+
+09/03. All files are cleaned up for GPL license.
+
+09/04. Remove ep7211 gal and ads gal configure options
+
+09/09. Fix compilation bugs when INCORE_RES defined for MiniGUI-Lite no standalone version.
+
+09/10. Change ftok to use /etc/passwd file.
+
+09/11. Release as version 1.3.0.
+
+*******************************************************************************
+What's new in this version (1.2.6-5, 2003/07/10 ~ 2003/xx/xx):
+
+07/10. Fix system menu bitmap loading bug.
+    * This bug only effect 1bpp ~ 4bpp vedio mode.
+
+07/10. Fix fblin1 subdriver of fbcon OLDGAL engine.
+
+07/10. Make IncludeClipRect, ExcludeClipRect and PtVisible functions on OLDGAL the same as ones on NEWGAL.
+
+07/10. Cleanup fblin1, fblin2, and fblin4 subdrivers of fbcon OLDGAL engine.
+
+07/10. Fix bug of uninitialized palette in LoadMyBitmap function.
+    * This bug only effect the mode with less than 8bpp.
+
+07/10. Fix a bug of MLEDIT control.
+
+07/11. Cleanup configuration scripts.
+
+07/12. Fix a bug of freeing hardware surface in FBCON engine of NEWGAL.
+
+07/29. Fix a bug of undefined ClipCursor when _CURSOR_SUPPORT not defined.
+
+07/29. Fix bugs of error variables in the file configure.in.
+
+08/01. Fix bugs of NEWTOOLBAR control.
+
+*******************************************************************************
+What's new in this version (1.2.6-4, aka, 1.2.6-var, 2003/06/17 ~ 2003/06/18):
+
+06/17. Upgrade to 1.2.6-var.
+
+06/18. Fix compilation bug of LBM image support.
+
+06/18. Fix bug of Update when cursor support disabled.
+
+06/18. Fix disabled cursor support for MiniGUI-Threads.
+
+06/18. Fix erasing background bug of vcongui.
+    * This bug is caused by non-zero descent of RBF font.
+
+06/19. Merge menuconfig tools.
+
+06/20. Add support for MS serial mouse.
+
+06/22. Fix a bug of BitBlt and StretchBlt of NEWGDI.
+
+07/04. Fix a bug of MSG_CHAR handling of SIMEDIT and MLEDIT.
+
+06/26. Restore VBFINFO structure.
+
+07/04. Fix a bug of MSG_CHAR message handling of SIMEDIT and MLEDIT.
+
+07/04. Fix a bug of UnloadQPFont function in src/font/qpf.c.
+
+*******************************************************************************
+What's new in this version (1.2.6-3, 2003/06/05 ~ 2003/06/17):
+
+06/05. Fix a bug of Intelligent Pinyin Input Method of GB2312 (src/ime/pinyin.c)
+    * This bug only affects the Big-Endin systems.
+
+06/06. Cleanup hosted main window when destroying the hosting main window.
+
+06/06. Remove the definition of WS_EX_IMECOMPOSE from include/window.h
+
+06/07. Add UnloadMyBitmap function.
+
+06/07. Return non-zero descent for RBF font according to its height.
+   * Add get_char_ascent operation for RBF font.
+
+06/09. Fix a bug of insert item in non-sorted LISTBOX control.
+
+06/10. Add LBS_NOTIFY check for all notification in LISTBOX control.
+
+06/10. Add DLGC_WANTENTER dialog code.
+
+06/10. Do not use memory DC for LISTVIEW control.
+
+06/12. DialogBox uses dwAddData2 of main window to pass the return code.
+   * Applications should use the first additional data of DialogBox.
+
+06/12. Fix two bugs in PROPSHEET control.
+   * Pass dwAddData of DLGTEMPLATE struct to be the dwAddData of property page.
+   * Fix calculation error of window size of property page.
+
+06/13. Modify event hook API for MiniGUI-Lite.
+   * SetServerEventHook function returns old event hook.
+
+06/13. Fix bug of MoveWindow in MiniGUI-Lite.
+
+06/13. Adjust server timeout value to be 10ms for MiniGUI-Lite.
+
+*******************************************************************************
+What's new in this version (1.2.6-2, 2003/05/27 ~ 2003/06/05):
+
+05/27. Enhance dskGetFirstVisibleWindow function in src/kernel/desktop-common.c.
+    * Rename it to dskGetFirstActivableWindow.
+    * Exclude main window with WS_EX_TOOLWINDOW style.
+
+05/29. Fix a bug of get_char_bitmap function in src/font/varbitmap.c.
+    * This bug only affects Big-Endian systems.
+
+05/30. Fix a bug of CreateLogFont function in src/font/devfont.c.
+    * This bug only affects QPF and TTF fonts which support multiple charsets.
+
+06/01. Enhance the default MiniGUI.cfg to use QPF font.
+
+06/02. Fix a bug of LISTBOX control.
+    * PageDown key will cause core dump when the box is empty.
+
+06/02. Fix a bug of FillBox function in NEWGDI.
+    * This bug only affects PowerPC system.
+
+06/03. Fix a bug of CreateCompatibleDCEx function in NEWGDI.
+    * Must initialize palette of the memory DC.
+    * This bug only affects 8bpp system.
+
+06/03. Fix a bug of putboxmask functions in old fbcon engine.
+    * This bug only affects filling box with transparent bitmap 
+      on 16bpp and 32 bpp systems.
+
+06/04. Fix a bug of UnloadBitmap function in OLDGDI.
+    * Reset bmBits field to NULL.
+
+06/04. Update GB2312 charset data and gb2312_to_unicode map.
+    * User must use the new RBF font for GB2312.
+
+06/05. Update GBK charset data.
+    * User must use the new RBF font for GBK.
+
+*******************************************************************************
+What's new in this version (1.2.6, 2003/05/27):
+
+01. Update configuration scripts for Automake/Autoconf.
+02. Merge MyWins library to MiniGUIExt library.
+
+03. Add SetNotificationCallback/GetNotificationCallback functions.
+04. Add NotifyParentEx function.
+    * Define NotifyParent as macro calling NotifyParentEx
+
+05. Add GetIconSize function to retrive the size of an icon object.
+06. Add SETSTRCMPFUNC message to the following controls:
+    * LISTBOX (LB_SETSTRCMPFUNC)
+    * COMBOBOX (CB_SETSTRCMPFUNC)
+    * MENUBUTTON (MB_SETSTRCMPFUNC)
+    * LISTVIEW (LVM_SETSTRCMPFUNC)
+    * TREEVIEW (TVM_SETSTRCMPFUNC)
+
+07. Add NEWTOOLBAR control.
+
+08. Add support of screen rotation for iPAQ H3800 (Old-GAL).
+    * Handle counterclockwise rotation of screen (src/gal/native/native.c).
+    * Handle counterclockwise rotation of screen (src/ial/native/native.c).
+    * Handle counterclockwise rotation of screen (src/ial/ipaq.c).
+    * Change conf option --enable-coortrans to --enable-cootrans_cw.
+    * Add conf option --enable-coortrans_ccw.
+    * Modify the shortcut script buildlib-ipaq.
+
+09. Fix bug of loading mono-color bitmap.
+10. Fix bug of refresh of LISTVIEW control.
+11. Fix bug of strcmp in UnregisterWindowClass function.
+12. Fix bug of MoveWindow and ScrollWindow under MiniGUI-Lite.
+13. Fix bug of MSG_ENABLE handling.
+14. Fix bug of DrawText with flag DT_EXPANDTABS.
+15. Fix bug of FocusRect (NEWGDI).
+16. Fix bug of offset value in surface (NEWGAL).
+17. Fix bug of SetActiveWindow.
+18. Fix bug of main window caption drawing of Flat-Style.
+19. Fix bug of Alpha-PNG image loading.
+20. Fix bug of missing Backspace in GB IME module.
+21. Fix bug of get_str_width method for TrueType font.
+22. Fix bug of QPF font rendering.
+23. Fix bug in GetTextMCharInfo function.
+24. Fix bug of NULL pointer in DispatchTimerMessage function.
+25. Fix bug of FillBoxWithBitmapPart in NEWGDI.
+26. Fix bug in gdi_width_one_char function (newgdi/drawtext.c).
+27. Fix bug of static viariable in myWinHelpMessage function. (ext/mywins/helpwin.c).
+28. Fix bug of invalid use of window additional data in myWinHelpMessage function.
+
+29. Clean up EDIT and SLEDIT control.
+    * Add EM_GETCARETPOS and EM_SETCARETPOS messages.
+
+30. Clean up STATIC control.
+    * Implement all styles.
+
+31. Clean up BUTTON control.
+32. Clean up MENUBUTTON control.
+33. Clean up LISTBOX control.
+34. Clean up COMBOBOX control.
+    * APIs have been modified vastly.
+    * Backwards compatiblity has been broken.
+
+35. Clean up TRACKBAR control.
+36. Clean up PROPSHEET control.
+37. Clean up COOLBAR control in MiniGUIExt library.
+    * APIs have been modified slightly.
+    * Backwards compatiblity has been broken.
+
+38. Clean up SPINBOX control in MiniGUIExt library.
+39. Clean up TREEVIEW control in MiniGUIExt library.
+    * APIs have been modified slightly.
+    * Backwards compatiblity has been broken.
+
+40. Clean up LISTVIEW control in MiniGUIExt library.
+    * Almost rewritten. 
+    * APIs have been modified vastly.
+    * Backwards compatiblity has been broken.
+
+41. Clean up low-level text out functions.
+
+42. Enhance MessageBox to handle default MSG_CLOSE message.
+43. Enhance OnlyMeCanDraw and ClientCanDrawNow to handle nested calling.
+44. Enhance timer mechanism, and control can call SetTimer now.
+45. Enhance IME mechanism:
+    * Use MSG_DOESNEEDIME to determine a window whether needs IME window.
+    * Use MSG_SETFOCUS and MSG_KILLFOCUS to open or close 
+      IME window automatically.
+    * WS_EX_IMECOMPOSE is obsolete.
+
+46. Modify the class of Simple Edit Control.
+    * Renamed to CTRL_EDIT ("edit").
+
+47. Modify key and mouse message hook APIs.
+    * Backwards compatiblity has been broken.
+
+48. Modify the GB IME APIs.
+    * Backwards compatiblity has been broken.
+
+49. Modify the management of pthread objects in MiniGUI-Threads.
+    * Destroy all mutex and semaphore variables for MiniGUI-Threads.
+
+50. Modify the low-level event handler.
+
+51. Modify BITMAP struct of Old-GDI.
+    * Make sure to use bmType, bmBitsPerPixel, bmBytesPerPixel, and bmPitch.
+    * Rename transparent field to bmColorKey.
+    * Add GetPixelInBitmap, SetPixelInBitmap, and ScaleBitmap functions.
+
+*******************************************************************************
+What's new in this version (1.2.5, 2003/03/23):
+
+1. Delete old UJIS charset support.
+1. Add EUC-JP and Shift-JIS charset support.
+2. Fix EUC-KR charset support.
+3. Fix some charset names.
+4. Add EUC-JP, Shift-JIS, EUC-KR, and BIG5 to UNICODE maps.
+5. Fix bug of error return when InitGDI failure.
+6. Fix bug of ExpandeMyBitmap in NEWGDI.
+7. Add support for all ISO8859 charsets.
+8. Add SetKeyboardLayout function to switch among keyboard layouts on run-time.
+9. Add GetFontMetrics and GetGlyphBitmap functions.
+10. Old Edit control renamed to Simple Edit control, class name is "SIMEDIT".
+11. The "EDIT" control now can handle no-fixed font.
+
+*******************************************************************************
+What's new in this version (1.2.4, 2003/02/20):
+
+1. Add IAL subdriver for IMPS2 mouse.
+2. Add support for GBK charset.
+3. Add support for GB18030 charset.
+4. Fix a notification message sending bug of ListView control.
+5. Fix clipping error of old GAL engine when coordinates translation enbabled.
+6. Fix bug of pthread link.
+7. Fix a endian-related bug in varbitmap.c.
+8. Add argument checking in FillBoxWithBitmap and FillBoxWithBitmapPart.
+9. Fix a bug in GDI cleanup routine.
+10. Fix bug of double-byte character testing in vcongui/vt.c.
+11. Add ISO8859-5 to UCS conversion function.
+12. No longer use F10 as the sys_char modifier.
+13. Fix bug of VGA16 GAL engine.
+14. Add support for Qt Prerendered Fonts.
+15. Fix bug of compilation of in-core symbol font.
+16. Use Linux keymap to translate key messages.
+17. Add MSG_KEYSYM message to handle non-latin key symbol.
+18. VCOnGUI now uses the keymap in libminigui.
+19. EDIT control now can handle non-fixed font.
+
+*******************************************************************************
+What's new in this version (1.2.3, 2002/10/09):
+
+1. Add CreateLogFontByName function.
+2. Optimize memory allocation of mywins library.
+3. Fix dead loop bug in RectInRegion function.
+4. Enhance flat style for colorful screen.
+5. Fix error alignment bug of dot line.
+6. Fix a refresh bug of BUTTON control.
+7. Add GetNextChild and GetNextMainWindow functions.
+
+*******************************************************************************
+What's new in this version (1.2.2, 2002/07/28):
+
+1. We no longer use signals to handle layer switching and client screen setting.
+   Layer switching now is more smoother and stabler.
+2. Fix a bug of init_count in InitMiniGUIExt and InitVectorialFonts functions.
+3. Fix a bug in hardware accelerated blitting for NeoMagic chipset in NEWGAL.
+4. Fix compilation error in src/server/request.c when cursor support disabled.
+5. Fix a bug when SetActiveWindow to HWND_DESKTOP.
+6. Tune flat window style for main window and built-in controls.
+   Note that you should use new resource package version 1.2.0 for flat window style.
+7. Use /dev/tty0 instead of /dev/tty when euid=0 in the console IAL engine.
+8. Use control's default background color as the bkgnd color of IME window.
+9. Optimize MoveWindow function.
+10. Fix some misspelling in the API documentation.
+
+*******************************************************************************
+What's new in this version (1.2.1, 2002/06/12):
+
+1. Fix a bug in timer handling of MiniGUI-Lite.
+2. Fix dead-lock bug of cursor handling of MiniGUI-Lite.
+3. Make background picture as the shared resource, so clients can 
+   display the background picture as the server in MiniGUI-Lite.
+4. Fix a bug in Intelligent Pinyin Input method.
+5. Fix some misspelling in the API documentation.
+
+*******************************************************************************
+What's new in this version (1.2.0, 2002/04/11):
+
+1. Fix a bug in SetPixel function.
+2. Add global resource management code for MiniGUI-Lite.
+   The global resource allocated by mginit for a client, such as cursors and hardware surfaces,
+   will be destroied when the client crash.
+3. Add some internal fields in some structures.
+4. Fix some misspelling in the API documentation.
+5. Change ttf support to be disabled by default.
+6. Jump from 1.1 series to 1.2 series to follow the Linux kernel convention.
+
+*******************************************************************************
+What's new in this version (1.1.0, 2002/03/08):
+
+1. Add MiniGUI API reference documentation version 0.9 in HTML pages and man pages.
+2. Tune and enhance PropertySheet control. Now you can switch among property pages
+   by using <Ctrl>+<Left/Right Arrow> key.
+3. Tune and enhance ListView control (Shu Ming). 
+    * Scrolling and painting optimized.
+    * Some useful notification codes added.
+4. Fix a bug in FillPolygon function.
+5. Fix some little bugs.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre10, 2002/01/16):
+
+1. Add MiniGUI API reference documentation version 0.3 in HTML pages and man pages.
+2. Change names of some structure:
+    * gal_color       ->      GAL_Color
+    * gal_palette     ->      GAL_Palette
+    * gal_rect        ->      GAL_Rect
+    * Client          ->      MG_Client
+    * Layer           ->      MG_Layer
+    * MGUI_RWops      ->      MG_RWops
+3. Change the installation directory of MiniGUI.cfg from /etc/ to %(prefix)/etc/.
+   So MiniGUI.cfg will be installed as /usr/local/etc/MiniGUI.cfg by default.
+4. Change the interfaces about system logical font.
+   Removed functions:
+    * GetSysTabbedTextExtent
+    * DoesSupportCharset
+    * SetSysCharset
+   Changed function:
+    * GetSysCharset
+   Now you can specify different logical fonts for Caption, Menu and Control through MiniGUI.cfg. 
+5. Fix some bugs in the following functions and controls:
+    * GetTabbedTextExtent (unintialized argument: size->cx)
+    * SetWindowFont (Error condition statement)
+    * Caret handling of EDIT and MEDIT controls (Hide cursor when erasing background.)
+6. Add "InitVectorialFonts" and "TermVectorialFonts" for MiniGUI-Lite.
+   You can now use these two functions to initialize the support for TrueType 
+   and Type 1 font in MiniGUI-Lite.
+7. Add support for TrueType fonts by using FreeType 2 library (Testing only).
+8. Change interface of the following GDI functions (remove "hdc" argument):
+   * LoadMyBitmapEx
+   * LoadMyBitmapFromFile
+   * LoadMyBitmapFromMemory
+8. Fix some little bugs.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre9, 2001/12/26):
+
+1. Add general stream I/O functions, see 'include/endianrw.h'.
+2. Reimplement LoadBitmapXXX functions based on our new general stream I/O 
+   functions. Now you can load image bitmap from memory-based stream object.
+3. Add CheckBitmapType function to test the bitmap file type from general 
+   stream I/O object.
+4. Add GetWindowFont and SetWindowFont function, and remove the GETFONT/SETFONT
+   messages.
+5. Reimplement the font handling of most controls.
+6. Debug and tune the LISTVIEW control.
+7. Reimplement the new GDI function ENTER_DRAWING and LEAVE_DRAWING macros.
+8. Use correct arguments in 'calloc' function.
+9. Clean up some GUI-related code.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre8, 2001/12/13):
+
+1. Add a new GAL/IAL engine -- 'QVFB'. You can run MiniGUI applications
+   on X Window and debug them easily by using this engine.
+2. Add the support for coordinate conversion for running MiniGUI on iPAQ H3600.
+3. Add TAB control and PropertySheet support.
+4. Enhance COMBOBOX control.
+5. Add LISTVIEW control in mgext library.
+6. Enhance TREEVIEW control in mgext library.
+7. Fix the bug of SetClientRect in new GDI.
+8. Change the native engines' name to 'fbcon' (native GAL engine) and 'console'
+   (native IAL engine).
+9. Fix bugs in MEDIT, PROGRESSBAR, and LISTBOX controls.
+10. Clean up some GUI code.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre7, 2001/11/22):
+
+1. Add GetUpdateRect to get the bounding rect of invalid region.
+2. Pass the pointer to invalid region as lParam of MSG_PAINT message.
+3. All file I/O are now endian independent.
+4. Add send_reply function for the server to send a reply to client.
+5. README updated.
+6. Some little tunning and debugging.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre6, 2001/11/12):
+
+1. Add interfaces of YUV overlay and gamma correction.
+   * CreateYUVOverlay, DeleteYUVOverlay
+   * DisplayYUVOverlay
+   * LocakYUVOverlay, UnlockYUVOverlay
+   * SetGamma, SetGammaRamp, and GetGammaRamp
+2. Add LockDC and UnlockDC to access the pixles of a DC directly.
+   * LockDC return the linear pixels memory can be accessed directly.
+   * UnlockDC unlock a locked DC.
+3. Provide a perfect support for cursor on MiniGUI-Lite.
+4. Optimize text output routines of DC.
+5. Fix bug of NeoMagic accelerator.
+6. Tune LISTBOX control.
+7. Clean up code of libvcongui.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre5, 2001/11/02):
+
+1. Fix some bugs in new GAL and GDI.
+2. Add general line and curve generators:
+    * LineClipper (using the algorithm by Cohen-Sutherland)
+    * LineGenerator (using the algorithm by Breshenham)
+    * CircleGenerator (ported from Allegro)
+    * EllipseGenerator (ported from Allegro)
+    * ArcGenerator (ported from Allegro)
+    * MonotoneVerticalPolygonGenerator (using the algorithm by Jim Michael)
+    * PolygonGenerator (ported from Allegro)
+    * FloodFillGenerator (ported from Allegro)
+3. Rewrite or add some new GDI functions based on generators above:
+    * LineTo
+    * Rectangle
+    * PollyLineTo
+    * Circle
+    * SplineTo (new)
+    * Ellipse (new)
+    * Arc (new)
+    * FloodFill (new)
+4. Rewrite or add some new GDI FillXXX functions based on generators above:
+    * FillBox
+    * FillCircle
+    * FillEllipse (new)
+    * FillPolygon (new)
+    * FloodFill (new)
+5. Add some region generators based on general close-curve generators above:
+    * InitCircleRegion (new)
+    * InitEllipseRegion (new)
+    * InitPolygonRegion (new)
+6. Add FrameBuffer acceleration support for NeoMagic chipset.
+7. Add fixed-point math routines ported from Allegro.
+8. All FillXXX GDI functions are raster operation enabled.
+9. Optimize the drawing of pixels, horizontal lines and vertical lines in
+   a x-y-banned region.
+10. Remove FillRect function.
+11. Remove some macros, such as RGB2Index.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre4, 2001/10/22):
+
+1. New GAL architecture borrowed from SDL.
+2. Memory DC allocates bit-memory from video memory instead of system memory by default.
+3. Now you can do transparent BitBlt and alpha blending BitBlt between two DCs.
+4. The BITMAP struct has been enhanced to support colorkey (transparent) and alpha-channel.
+5. Some RECT-related APIs have been defined as inline functions.
+6. Some DC Set/Get APIs defined as macros.
+7. Use x-y-banned regions. Now we can optimize the GDI functions.
+8. Now all clipping region operations based on device coordinates, not logical corrdinates,
+   such as ExcludeClipRect, and IncludeClipRect.
+9. Many new DC APIs have been add to support new features:
+    * Add SetRasterOperation/GetRasterOperation functions to define 
+      the raster operation (XOR, AND, OR, or SET) of DC. Now you can draw 
+      Xored lines or circles.
+    * Add SetMemDCAlpha and SetMemDCColorkey functions to define the
+      colorkey and alpha-channel of a DC.
+    * Add PtInRegion/RectInRegion to determine whether a specfic point or rectangle
+      is in or intersects with a region.
+    * Add UnionRegion/SubtractRegion/XorRegion functions to merge, subtract, or xor
+      a region with the other.
+    * Add some new GDI drawing functions: FillRect, FillCircle.
+    * Add some BITMAP operations: InitBitmap, UnloadBitmapEx, ScaleBitmap, 
+      GetPixelInBitmap, SetPixelInBitmap, and GetBitmapFromDC.
+    * Remove some BITMAP operations: SaveScreenBox, SaveCoveredScreenBox, PutSavedBoxOnScreen,
+      PutSavedBoxOnDC, ScreenCopy.
+    * Re-define some clipping region functions: ExcludeClipRect, IncludeClipRect, PtVisible.
+    * Re-define MYBITMAP-related functions: LoadMyBitmap, ExpandMyBitmap, ExpandMonoBitmap,
+      Expand16CBitmap, Expand256CBitmap, CompileRGBABitmap.
+    * Re-implement some GDI functions: FocusRect, DrawHVDotLine.
+    * ...
+10. Use ./configure --disable-newgal to disable new GAL and GDI. If MiniGUI configured
+    with new GAL, the macro _USE_NEWGAL will be defined in <minigui/config.h>.
+11. Note that if you disable new GAL, all interfaces will be same as old version of MiniGUI.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre3, 2001/10/08):
+
+1. The GAL interfaces cleaned up.
+    * Remove operations of `packcolors', `unpackpixels', etc.
+2. Use ioperm instead of iopl to gain capability of direct I/O in "VGA16" GAL engine.
+3. Remove "#include <linux/keyboard.h>" in "include/common.h".
+   Define NR_KEYS to 128 by default. If you what to override this default,
+   you can include <linux/keyboard.h> before include <minigui/common.h>.
+4. Use system font height to define some window metrics.
+5. Fix bug of drawing button with style BS_PUSHLIKE.
+6. Add a variable of SYSTEM_LIBS in configure.in. 
+   Now you are not needed to specify the dependent libraries of minigui
+   when build your applications.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre2, 2001/09/24):
+
+1. The IAL interfaces cleaned up.
+    * get_mousex and get_mousey have been removed instead by get_mousexy.
+    * Now you set some engine operations to be NULL (see src/include/ial.h).
+    * Update_mouse and update_keyboard must return values to indicate whether
+      have data or how much data to be read.
+2. Add "Dummy" IAL engine to do nothing about input events. This engine can
+   be used when you are porting MiniGUI to a new hardware plateform.
+3. Now you can specify your mouse type to "none" when you have not a mouse or
+   a not supported mouse by Native IAL engine.
+4. Add "VGA16" GAL engine which based on SVGALib to support standard VGA 16-color
+   mode.
+5. Add some basic data types in common.h.
+6. Add endian-sensitive I/O routines to support Big-Endian systems. But the
+   code have not be tested on BE systems (see include/endianrw.h, and 
+   src/misc/endianrw.c).
+7. The internal used global varibles now have an universal prefix: __mg_.
+8. All controls' callback procedures defined as static functions.
+9. Max/min macros renamed to MAX/MIN, and ABS macro added.
+10. Fix some little bugs.
+
+*******************************************************************************
+What's new in this version (1.1.0Pre1, 2001/09/12):
+
+1. You can use JoinLayer to let a client join a layer created by other client.
+   If success, clients on the same layer can output to the screen at 
+   the same time (MiniGUI-Lite).
+2. Some other APIs has been added to support layer. Please see "include/minigui.h".
+3. Remerge the latest code of CoolBar by Wang Jian. Tunned and cleaned up by Wei Yongming.
+4. Change the default handling of MSG_SHOWWINDOW. The old handling is a bug.
+5. Define declared but not defined function "GetMainWindowHandle".
+6. Remove function "Send2TopMostClient", instead by "Send2TopMostClients".
+7. Add "Send2Client" and "Send2ActiveClient" functions.
+8. Add a main window style: WS_ABSSCRPOS. 
+9. Fix bug of "KillTimer".
+10. Add a configuration variable, textmode. Use it to disable text/graphics
+    switching of console for some embedded system.
+11. Fix some little bugs.
+
+*******************************************************************************
+What's new in this version (1.0.08, 2001/09/04):
+
+1. Fix bug of vcongui termination core dumping.
+2. Fix bug of handling of NULL string in FixStrAlloc.
+3. Code cleaning up.
+
+*******************************************************************************
+What's new in this version (1.0.07, 2001/08/28):
+
+1. Merge ComboBox and CoolBar control by Wang Jian and Wei Yongming.
+2. Enhance WS_EX_CTRLASMAINWIN style, and add a notification message 'MSG_CHILDHIDDEN'.
+3. Add input engine for iPAQ H3600 by Chen Zhen.
+4. Add input engine for NEC VR4181 debug board by Luo Gang.
+5. Add 32BPP subdriver for Native GAL engine by Richard Cai.
+6. Add ToolTip Window in mywindows library, and WS_EX_TOOLWINDOW style can be
+   used to create some windows which can not be actived.
+7. Use acconfig.h to define subdrivers of Native Graphics Engine.
+8. Fix some bugs.
+
+*******************************************************************************
+What's new in this version (1.0.06, 2001/08/07):
+
+1. Fix bug of duplicated declarations of InitGUI function for MiniGUI-Threads.
+2. Fix bug of undefined type of u_short in 'vcongui/defkeymaps.c'.
+3. Add two articles about MiniGUI Programming.
+4. Use Automake MACROs to install data files in directory of 'ext/res/'.
+5. README updated.
+
+*******************************************************************************
+What's new in this version (1.0.05, 2001/07/16):
+
+1. Add '-nogui' flag to MiniGUI-Lite, so clients can directly control FrameBuffer.
+2. Add 'SetServerEventHook' functions to MiniGUI-Lite, so server can get the
+   low level events before normal handling (idea from Fengbin).
+3. Some little bugs fixed.
+
+*******************************************************************************
+What's new in this version (1.0.04, 2001/06/20):
+
+1. Fix a bug in MONTHCALENDAR Control.
+2. Fix a compilation bug in control.h file.
+
+*******************************************************************************
+What's new in this version (1.0.03, 2001/05/15):
+
+1. Add "#include <string.h>" in some C source files to fix compiling warnings/errors on RedHat Linux 7.1.
+2. Fix a bug in "About MiniGUI" dialog.
+3. Cancel the can_kill_it functions in src/server/client.c.
+4. Fix some little bugs in menu handling.
+
+*******************************************************************************
+What's new in this version (1.0.02, 2001/05/09):
+
+1. Fix a big bug in operation of mgClients (MiniGUI-Lite).
+2. Fix an including bug in systext.c.
+3. Add README.hz file.
+
+*******************************************************************************
+What's new in this version (1.0.01, 2001/04/24):
+
+1. Fix some bugs in MEDIT control.
+2. Optimize redrawing of MEDIT control.
+3. Add _VERSION_CODE and _MINIGUI_VERSION_CODE to `include/common.h'.
+4. Use local_SysText to implement translation of system text.
+5. Obesolete some dti functions in Lite version, and dti.c is not needed for Lite version.
+6. Add MSG_TIMECHANGE for Lite version.
+7. Some little bugs fixed.
+8. Update some man pages.
+
+*******************************************************************************
+What's new in this version (1.0.00, 2001/04/14):
+
+1. Fix some little bugs. (LineTo, LoadIcon, MEDIT, MONTHCALENDAR, etc.)
+2. Enhance MEDIT control. (Add ES_AUTOWRAP style and ES_BASELINE style.)
+2. Enhance LISTBOX control. (Add LBN_CLICKED notification message.)
+3. Enhance MiniGUI-Lite's drawing semaphore operations.
+4. Fix some bugs in underlay drivers of Native Engine.
+5. Enhance FLAT_WINDOW_STYLE to support PDA-like screen.
+6. Add RegisterListenFD/UnregisterListenFD functions to use MiniGUI's underlay select
+   system call to listen some file descriptors.
+7. Add SPINBOX control in MiniGUI-ext library.
+8. Enhance MiniGUI-Lite's resource sharing.
+9. Export some general socket I/O functions.
+10. Add RegisterRequestHandler for server of MiniGUI-Lite to extend its function.
+11. Add some styles to MessageBox to control allignment.
+12. Provide two MiniGUI.cfg files to support 3D window style and flat window style.
+13. Enhance vcongui to use RegisterListenFD (in MiniGUI-Lite version).
+
+*******************************************************************************
+What's new in this version (1.0.00Pre4, 2001/03/13):
+
+1. Update some docs.
+2. Fix the bug of PNG image file loading.
+
+*******************************************************************************
+What's new in this version (1.0.00Pre3, 2001/03/02):
+
+1. Update White Paper and add some articles about MiniGUI.
+2. Fix the bug of compilation error in ext/ directory.
+3. Use SIGSTOP and SIGCONT to help virtual console switching.
+
+*******************************************************************************
+What's new in this version (1.0.00Pre2, 2001/02/26):
+
+1. Fix a bug in src/ial/ep7211.c.
+2. Update README and some manpages.
+3. Add a function get_sock_fd2srv for clients to return the socket fd connected to the server (MiniGUI-Lite).
+4. Change the default handling of message MSG_SIZECHANGED.
+5. Change the value of KS_* macros, and some bugs about the status of shift keys and mouse button fixed.
+6. Moving child windows when handling message MSG_PAINT of the parent is now possible.
+
+*******************************************************************************
+What's new in this version (1.0.00Pre1, 2001/02/22):
+
+1. Add MiniGUIExt library. More information see ext/README.
+2. Merge EUCKR and UJIS charsets support by Qiu Feng.
+3. Now MiniGUI read window metrics and element colors from MiniGUI.cfg.
+   So you can change the appearance of MiniGUI windows and controls.
+4. Enable flat style for main windows and some other controls.
+5. The lock file used by MiniGUI-Lite now moved to /var/tmp, and unlink the lock file
+   when the server exit.
+6. Switch virtual console under MiniGUI-Lite by using Ctrl+F1...F6.
+7. Bugs in Terminal Size Dialog of VCOnGUI fixed.
+8. Transparent bitmap support. 
+    * Add LoadMyBitmap, ExpandeMyBitmap functions.
+    * Add "transparent" field in BITMAP structure.
+    * Add an argument to GAL_PutBoxMask function.
+9. Some little bugs fixed.
+10. Change appearance of some window element.
+
+*******************************************************************************
+What's new in this version (1.0.00Beta5, 2001/02/15):
+
+1. Bugs in semaphore operations, UNIX socket operations, and select system call fixed (MiniGUI-Lite).
+2. APIs for OpenFileDialogBox changed. Now you can specify the position and size of OpenFileDialogBox.
+   But you can keep to use the old APIs for OpenFileDialogBox.
+3. Add some styles for MessageBox to specify the position of MessageBox related to parent window or desktop.
+4. Some bugs in Edit/MEdit control fixed.
+5. Virtual console switch function for PC user added (MiniGUI-Lite only).
+6. Add a configuration switch to enable flat style for Button and MenuButton controls.
+7. Bugs in DestroyWindow fixed (To reset old_under_pointer field to NULL).
+8. The width of menu item shrinked.
+9. Add a new function to MiniGUI (DrawFlatControlFrame).
+
+*******************************************************************************
+What's new in this version (1.0.00Beta4, 2001/02/05):
+
+1. MiniGUI-Lite bug fix.
+2. Add some flags in configure.in.
+3. IAL engine for ADS Graphics Client runs well now.
+4. FrameBuffer Linear 4bpp driver for native GAL engine runs well now.
+5. Bugs in MenuButton control, MEdit control, and Static control fixed.
+6. Bugs in handling ETC files fixed.
+
+*******************************************************************************
+What's new in this version (1.0.00Beta1, 2001/01/17):
+
+1. MiniGUI-Lite enhanced and some bugs fixed.
+2. TrackBar control enhanced.
+3. The format of MiniGUI.cfg changed.
+4. Add a new API: SetWindowBkColor.
+5. The APIs are stable now.
+
+*******************************************************************************
+What's new in this version (0.9.98, 2001/01/03):
+
+1. MiniGUI Lite version. Please use "./configure --enable-lite" to enable lite version.
+   Lite version is the default setting.  You can use "./configure --disable-lite" to 
+   make the original MiniGUI which based on pthreads. Note that Lite version can only
+   run on the NATIVE engine, and do not provide support for TTF and Adobe Type1 fonts.
+2. Add a new control: TrackBar.
+3. Bugs in Medit control fixed.
+
+*******************************************************************************
+What's new in this version (0.9.96, 2000/11/28):
+
+1. Native engine by Song Lixin. This engine is based on framebuffer directly.
+   Currently provide support for Linear 16bpp, Linear 8bpp drivers.
+2. Sub-control support. You can create child controls in a control, not limited
+   only in a main window, and create child child control is possible as well.
+3. MEDIT control enhanced. Use MiniGUI's multiple fonts and multiple charsets
+   interface. See "notebook".
+4. Toolbar control enhanced. You can add tool buttons with different size.
+5. Menubutton control added. Menubutton behaves as dropdown combobox, but displays
+   list items in a popup menu instead in a listbox.
+6. Add a extended style for control, WS_EX_CTRLASMAINWIN. You can use this
+   style to create a control that can display its content outside the main window
+   which the control belong to.
+
