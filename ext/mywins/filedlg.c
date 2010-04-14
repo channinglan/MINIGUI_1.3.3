@@ -317,7 +317,7 @@ WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                     strcat (pWinFileData->filepath, "/");
                     if (access (pWinFileData->filepath, R_OK) == -1) {
                         sprintf (msg, "No read permission to %s! \n", pWinFileData->filepath);
-                        MessageBox (hDlg, msg, "提示信息", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
+                        MessageBox (hDlg, msg, "No read permission", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
                         GetParentDir (pWinFileData->filepath);
                     }
                 }
@@ -332,7 +332,8 @@ WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
             } 
             break;
         }
-
+//cyli fix to 0 for rotation
+#if 1
         case IDC_FILECHOISE:
         {
             if (code == LBN_SELCHANGE || code == LBN_DBLCLK || code == LBN_ENTER) {
@@ -351,7 +352,7 @@ WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
             }
             break;
         }
-
+#endif
 #if 0
         case IDC_HOME:
         {
@@ -453,15 +454,15 @@ WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                     }
 
                     if (access (dir, F_OK) == -1){
-                        sprintf (msg, "对不起，未找到指定的目录：\n\n %s \n", fn);
-                        MessageBox(hDlg , msg, "提示信息", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
+                        sprintf (msg, "%s does not exist\n", fn);
+                        MessageBox(hDlg , msg, "Not exist", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
                     } else {
                         if (access (dir, R_OK) == -1) {
-                            sprintf (msg, "不能读取 %s !\n", fn);
-                            MessageBox(hDlg , msg, "提示信息", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
+                            sprintf (msg, "No read permission to %s !\n", fn);
+                            MessageBox(hDlg , msg, "No read permission", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
                         } else if ((pWinFileData->IsSave) && (access (dir, W_OK) == -1)) {
-                            sprintf (msg, "对 %s 没有写权限!\n", fn);
-                            MessageBox(hDlg , msg, "提示信息", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
+                            sprintf (msg, "No write permission to %s!\n", fn);
+                            MessageBox(hDlg , msg, "No write permission", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
                         } else {
                             strncpy (pWinFileData->filepath, dir, PATH_MAX);
                             myWinFileListDirWithFilter (hDlg, IDC_DIRCHOISE, IDC_FILECHOISE, 
@@ -500,18 +501,20 @@ WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                         strcat (fullname, pWinFileData->filename);
 
                         if (access (fullname, F_OK) != -1) {
-                            sprintf (msg, "是否要覆盖文件 %s ?\n", fullname);
-                            if (MessageBox(hDlg, msg, "提示信息", MB_YESNO | MB_ICONQUESTION | MB_BASEDONPARENT) == IDNO)
+                            sprintf (msg, "Save to %s ?\n", fullname);
+                            if (MessageBox(hDlg, msg, "Save file", MB_YESNO | MB_ICONQUESTION | MB_BASEDONPARENT) == IDNO)
                                 break;
+//cyli fix for rotation
+//                                EndDialog(hDlg,IDOK);
                         }
 
                         if (strcmp (filter, pWinFileData->filename) == 0) {
                             if (access (fullname, W_OK) == -1) {
-                                sprintf (msg, "对 %s 没有写权限!\n", fullname);
-                                MessageBox(hDlg , msg, "提示信息", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
+                                sprintf (msg, "No write permission to %s!\n", fullname);
+                                MessageBox(hDlg , msg, "No write permission", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
                             } else if (access (fullname, R_OK) == -1) {
-                                sprintf (msg, "不能读取 %s !\n", fullname);
-                                MessageBox(hDlg , msg, "提示信息", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
+                                sprintf (msg, "No read permission to %s!\n", fullname);
+                                MessageBox(hDlg , msg, "No read permission", MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
                             } else {
                                 strncpy (pWinFileData->filename, filter, NAME_MAX);
                                 strncpy (pWinFileData->filefullname, fullname, NAME_MAX + PATH_MAX + 1);
@@ -524,6 +527,7 @@ WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                     }
                 } else {    
                     strcat (pWinFileData->filefullname,pWinFileData->filename);
+//cyli remove for rotation 
                     if (strcmp (filter, pWinFileData->filename) == 0)
                         EndDialog(hDlg,IDOK);
                 }
@@ -573,25 +577,31 @@ int OpenFileDialogEx (HWND hWnd, int lx, int ty, int w, int h, PFILEDLGDATA pfdi
 */
         { "button", WS_VISIBLE | WS_TABSTOP ,
             2*SPACE_WIDTH+totalW*2/5 , SPACE_HEIGHT, 80, 20,
-               IDC_UP, "上一级目录", 0 },
+               IDC_UP, "Upper", 0 },
         { "listbox", WS_VISIBLE | WS_TABSTOP | LBS_NOTIFY | WS_VSCROLL | WS_BORDER | LBS_SORT,
             SPACE_WIDTH, LstTY, totalW*2/5, LstH, IDC_DIRCHOISE, NULL, 0 },
+//cyli fix for rotation
+//            SPACE_WIDTH, LstTY, totalW*2/5, LstH+2, IDC_DIRCHOISE, NULL, 0 },
         { "listbox",WS_VISIBLE | WS_TABSTOP | LBS_NOTIFY | WS_VSCROLL | WS_BORDER | LBS_SORT,
             2*SPACE_WIDTH+totalW*2/5, LstTY, totalW*3/5, LstH, IDC_FILECHOISE, NULL, 0 },
+//cyli fix for rotation
+//            2*SPACE_WIDTH+totalW*2/5, LstTY, totalW*3/5, LstH+2, IDC_FILECHOISE, NULL, 0 },
             
         { "static", WS_VISIBLE | SS_LEFT,
-            SPACE_WIDTH, LstH+LstTY+SPACE_HEIGHT, 4*GetSysCCharWidth(), GetSysCharHeight(), IDC_STATIC1, "当前路径", 0 },
+            SPACE_WIDTH, LstH+LstTY+SPACE_HEIGHT, 4*GetSysCCharWidth(), GetSysCharHeight(), IDC_STATIC1, "Current Path", 0 },
         { "static", WS_VISIBLE | SS_LEFT,
             2*SPACE_WIDTH+4*GetSysCCharWidth(), LstH+LstTY+SPACE_HEIGHT, totalW-4*GetSysCCharWidth()-3*SPACE_WIDTH, GetSysCharHeight(), IDC_PATH, "", 0 },
         { "static", WS_VISIBLE | SS_LEFT,
-            SPACE_WIDTH, LstH+LstTY+2*SPACE_HEIGHT+GetSysCharHeight()+1, 2*GetSysCCharWidth(), GetSysCharHeight(), IDC_STATIC2, "文件", 0 },
+            SPACE_WIDTH, LstH+LstTY+2*SPACE_HEIGHT+GetSysCharHeight()+1, 2*GetSysCCharWidth(), GetSysCharHeight(), IDC_STATIC2, "File", 0 },
         { "sledit",WS_VISIBLE | WS_TABSTOP | WS_BORDER | LBS_NOTIFY,
             2*SPACE_WIDTH+2*GetSysCCharWidth(), LstH+LstTY+2*SPACE_HEIGHT+GetSysCharHeight(), totalW-2*GetSysCCharWidth()-3*SPACE_WIDTH, 18, IDC_FILENAME, NULL, 0 },
+//cyli fix for rotation
+//            2*SPACE_WIDTH+2*GetSysCCharWidth(), LstH+LstTY+2*SPACE_HEIGHT+GetSysCharHeight(), totalW-2*GetSysCCharWidth()-3*SPACE_WIDTH, 22, IDC_FILENAME, NULL, 0 },
         
         { "button", WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON | WS_GROUP,
-            (totalW-2*40)*2/5+SPACE_WIDTH, LstH+LstTY+3*SPACE_HEIGHT+GetSysCharHeight()+20,40 , 20, IDOK, "确认", 0 },
+            (totalW-2*40)*2/5+SPACE_WIDTH, LstH+LstTY+3*SPACE_HEIGHT+GetSysCharHeight()+20, 60 , 20, IDOK, "OK", 0 },
         { "button", WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
-            (totalW-2*40)*3/5+2*SPACE_WIDTH+40, LstH+LstTY+3*SPACE_HEIGHT+GetSysCharHeight()+20, 40, 20, IDCANCEL, "取消", 0 }
+            (totalW-2*40)*3/5+2*SPACE_WIDTH+40, LstH+LstTY+3*SPACE_HEIGHT+GetSysCharHeight()+20, 60, 20, IDCANCEL, "Cancel", 0 }
     };
 
     DLGTEMPLATE WinFileDlg = {
@@ -605,7 +615,7 @@ int OpenFileDialogEx (HWND hWnd, int lx, int ty, int w, int h, PFILEDLGDATA pfdi
     if (access (pfdi->filepath, F_OK) == -1) 
         return FILE_ERROR_PATHNOTEXIST;             
         
-    WinFileDlg.caption   = (pfdi->IsSave)?"保存文件":"打开文件";
+    WinFileDlg.caption   = (pfdi->IsSave)?"Save File":"Open File";
     WinFileDlg.controls  = WinFileCtrl;
     return DialogBoxIndirectParam (&WinFileDlg, hWnd,
             WinFileProc, (LPARAM)(pfdi));

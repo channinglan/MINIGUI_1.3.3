@@ -35,8 +35,8 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>
-#include <asm/page.h>        /* For definition of PAGE_SIZE */
-
+//#include <asm/page.h>        /* For definition of PAGE_SIZE */
+#define PAGE_SIZE 4096
 #include <linux/vt.h>
 #include <linux/kd.h>
 #include <linux/keyboard.h>
@@ -82,6 +82,7 @@ static const GAL_Rect checkres[] = {
     {  0, 0, 1024,  768 },        /* 16 bpp: 0x117, or 279 */
     {  0, 0,  960,  720 },        /* 16 bpp: 0x18A, or 394 */
     {  0, 0,  800,  600 },        /* 16 bpp: 0x114, or 276 */
+    {  0, 0,  800,  480 },        /*  */
     {  0, 0,  768,  576 },        /* 16 bpp: 0x182, or 386 */
     {  0, 0,  640,  480 },        /* 16 bpp: 0x111, or 273 */
     {  0, 0,  640,  400 },        /*  8 bpp: 0x100, or 256 */
@@ -127,6 +128,7 @@ static const struct {
     {  640,  400, 31746,  96, 32, 41,  1,  64, 3, 2, 0 },    /* 85 Hz */
     {  640,  480, 31746, 120, 16, 16,  1,  64, 3, 0, 0 },    /* 75 Hz */
     {  768,  576, 26101, 144, 16, 28,  6, 112, 4, 0, 0 },    /* 60 Hz */
+    {  800,  480, 39721,  64, 56, 23, 37, 120, 6, 3, 0 },    /* 72 Hz */
     {  800,  600, 20000,  64, 56, 23, 37, 120, 6, 3, 0 },    /* 72 Hz */
     {  960,  720, 17686, 144, 24, 28,  8, 112, 4, 0, 0 },    /* 60 Hz */
     { 1024,  768, 13333, 144, 24, 29,  3, 136, 6, 0, 0 },    /* 70 Hz */

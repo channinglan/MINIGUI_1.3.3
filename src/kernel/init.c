@@ -432,7 +432,8 @@ void GUIAPI TerminateGUI (int rcByGUI)
     }
     else {
 #ifndef __ECOS            
-        pthread_kill_other_threads_np ();
+	// cyli fix
+//        pthread_kill_other_threads_np ();
 #endif
     }
    

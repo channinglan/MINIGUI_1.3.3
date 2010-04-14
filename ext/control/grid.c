@@ -623,8 +623,12 @@ static int AddCol(HWND hwnd, PGRIDCOLHEADER pHeader, PGRIDDATA pGridData)
 	return 0;
       pCol1->pHeadCell = pCell1;
       pCell1->pRight = pRowHdr->pHeadCell;
-      (PGRIDCOLHDR)pCell1->pRowHdr = pRowHdr;
-      (PGRIDCOLHDR)pCell1->pColHdr = pCol1;
+//      (PGRIDCOLHDR)pCell1->pRowHdr = pRowHdr;
+//      (PGRIDCOLHDR)pCell1->pColHdr = pCol1;
+      pCell1->pRowHdr = pRowHdr;
+      pCell1->pColHdr = pCol1;
+//for invalid lvalue in assignment
+
       pRowHdr->pHeadCell = pCell1;
       pRowHdr = pRowHdr->pNext;
     }
@@ -635,8 +639,8 @@ static int AddCol(HWND hwnd, PGRIDCOLHEADER pHeader, PGRIDDATA pGridData)
       pCell1->pNext = pCell2;
       pCell1 = pCell2;
       pCell2->pRight = pRowHdr->pHeadCell;
-      (PGRIDCOLHDR)pCell2->pColHdr = pCol2;
-      (PGRIDROWHDR)pCell2->pRowHdr = pRowHdr;
+      /*(PGRIDCOLHDR)*/pCell2->pColHdr = pCol2;
+      /*(PGRIDROWHDR)*/pCell2->pRowHdr = pRowHdr;
       pRowHdr->pHeadCell = pCell2;
       pRowHdr = pRowHdr->pNext;
     }
@@ -664,8 +668,8 @@ static int AddCol(HWND hwnd, PGRIDCOLHEADER pHeader, PGRIDDATA pGridData)
       pCol2->pHeadCell = pCell3;
       pCell1->pRight = pCell3;
       pCell3->pRight = pCell2;
-      (PGRIDCOLHDR)pCell3->pColHdr = pCol2;
-      (PGRIDROWHDR)pCell3->pRowHdr = pRowHdr;
+      /*(PGRIDCOLHDR)*/pCell3->pColHdr = pCol2;
+      /*(PGRIDROWHDR)*/pCell3->pRowHdr = pRowHdr;
       pRowHdr = pRowHdr->pNext;
       pCell1 = pCell1->pNext;
       if(pCell2) pCell2 = pCell2->pNext;
@@ -677,8 +681,8 @@ static int AddCol(HWND hwnd, PGRIDCOLHEADER pHeader, PGRIDDATA pGridData)
       pCell3 = pCell3->pNext;
       pCell1->pRight = pCell3;
       pCell3->pRight = pCell2;
-      (PGRIDCOLHDR)pCell3->pColHdr = pCol2;
-      (PGRIDROWHDR)pCell3->pRowHdr = pRowHdr;
+      /*(PGRIDCOLHDR)*/pCell3->pColHdr = pCol2;
+      /*(PGRIDROWHDR)*/pCell3->pRowHdr = pRowHdr;
       pRowHdr = pRowHdr->pNext;
       pCell1 = pCell1->pNext;
       if(pCell2) pCell2 = pCell2->pNext;
@@ -730,8 +734,8 @@ static int AddRow(HWND hwnd, PGRIDROWHEADER pHeader, PGRIDDATA pGridData)
 	return 0;
       pRow1->pHeadCell = pCell1;
       pCell1->pNext = pColHdr->pHeadCell;
-      (PGRIDCOLHDR)pCell1->pColHdr = pColHdr;
-      (PGRIDROWHDR)pCell1->pRowHdr = pRow2;
+      /*(PGRIDCOLHDR)*/pCell1->pColHdr = pColHdr;
+      /*(PGRIDROWHDR)*/pCell1->pRowHdr = pRow2;
       pColHdr->pHeadCell = pCell1;
       pColHdr = pColHdr->pNext;
     }
@@ -742,8 +746,8 @@ static int AddRow(HWND hwnd, PGRIDROWHEADER pHeader, PGRIDDATA pGridData)
       pCell1->pRight = pCell2;
       pCell1 = pCell2;
       pCell2->pNext = pColHdr->pHeadCell;
-      (PGRIDCOLHDR)pCell2->pColHdr = pColHdr;
-      (PGRIDROWHDR)pCell2->pRowHdr = pRow2;
+      /*(PGRIDCOLHDR)*/pCell2->pColHdr = pColHdr;
+      /*(PGRIDROWHDR)*/pCell2->pRowHdr = pRow2;
       pColHdr->pHeadCell = pCell2;
       pColHdr = pColHdr->pNext;
     }
@@ -771,8 +775,8 @@ static int AddRow(HWND hwnd, PGRIDROWHEADER pHeader, PGRIDDATA pGridData)
       pRow2->pHeadCell = pCell3;
       pCell1->pNext = pCell3;
       pCell3->pNext = pCell2;
-      (PGRIDCOLHDR)pCell3->pColHdr = pColHdr;
-      (PGRIDROWHDR)pCell3->pRowHdr = pRow2;
+      /*(PGRIDCOLHDR)*/pCell3->pColHdr = pColHdr;
+      /*(PGRIDROWHDR)*/pCell3->pRowHdr = pRow2;
 
       pColHdr = pColHdr->pNext;
       if(pCell1) pCell1 = pCell1->pRight;
@@ -785,8 +789,8 @@ static int AddRow(HWND hwnd, PGRIDROWHEADER pHeader, PGRIDDATA pGridData)
       pCell3 = pCell3->pRight;
       pCell1->pNext = pCell3;
       pCell3->pNext = pCell2;
-      (PGRIDCOLHDR)pCell3->pColHdr = pColHdr;
-      (PGRIDROWHDR)pCell3->pRowHdr = pRow2;
+      /*(PGRIDCOLHDR)*/pCell3->pColHdr = pColHdr;
+      /*(PGRIDROWHDR)*/pCell3->pRowHdr = pRow2;
 
       pColHdr = pColHdr->pNext;
       if(pCell1) pCell1 = pCell1->pRight;

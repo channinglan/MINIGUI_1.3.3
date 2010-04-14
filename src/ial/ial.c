@@ -151,7 +151,8 @@ static INPUT inputs [] =
     {"MC68X328", InitMC68X328Input, TermMC68X328Input},
 #endif
 #ifdef _SMDK2410_IAL
-    {"SMDK2410", Init2410Input, Term2410Input},
+//    {"SMDK2410", Init2410Input, Term2410Input},
+    {"soclets", Init2410Input, Term2410Input},
 #endif
 };
 
@@ -186,6 +187,11 @@ int InitIAL (void)
         }
     }
    
+//#ifdef _DEBUG
+    fprintf (stderr, "buff: Use %s .\n", buff);
+    fprintf (stderr, "mdev: Use %s .\n", mdev);
+    fprintf (stderr, "mtype: Use %s .\n", mtype);
+//#endif
     if (cur_input == NULL) {
         fprintf (stderr, "IAL: Does not find matched engine.\n");
         if (NR_INPUTS) {

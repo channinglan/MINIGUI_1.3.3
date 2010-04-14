@@ -85,7 +85,7 @@
 /* #undef HAVE_LONG_FILE_NAMES */
 
 /* Define if you have a working `mmap' system call.  */
-#define HAVE_MMAP 1
+/* #undef HAVE_MMAP */
 
 /* Define if system calls automatically restart after interruption
    by a signal.  */
@@ -370,7 +370,7 @@
 /* #undef _MC68X328_IAL */
 
 /* Define if include IAL engine for smdk2410 touch screen */
-/* #undef _SMDK2410_IAL */
+#define _SMDK2410_IAL 1
 
 
 /* Define if include the dummy IAL engine */
@@ -458,31 +458,31 @@
 #define _INCORERBF_GB12 1
 
 /* Define if support var bitmap fonts */
-#define _VBF_SUPPORT 1
+/* #undef _VBF_SUPPORT */
 
 /* Define if include in-core font: SansSerif */
-#define _INCOREFONT_SANSSERIF 1
+/* #undef _INCOREFONT_SANSSERIF */
 
 /* Define if include in-core font: Courier */
-#define _INCOREFONT_COURIER 1
+/* #undef _INCOREFONT_COURIER */
 
 /* Define if include in-core font: Symbol */
-#define _INCOREFONT_SYMBOL 1
+/* #undef _INCOREFONT_SYMBOL */
 
 /* Define if include in-core font: VGAS */
-#define _INCOREFONT_VGAS 1
+/* #undef _INCOREFONT_VGAS */
 
 /* Define if support QPF font */
 #define _QPF_SUPPORT 1
 
 /* Define if support TrueType font based on FreeType 1.3 or FreeType 2 */
-#define _TTF_SUPPORT 1
+/* #undef _TTF_SUPPORT */
 
 /* Define if has FreeType 2 */
 /* #undef _HAS_FREETYPE2 */
 
 /* Define if support Adobe Type1 */
-#define _TYPE1_SUPPORT 1
+/* #undef _TYPE1_SUPPORT */
 
 /* Define if support Latin 2 charset */
 /* #undef _LATIN2_SUPPORT */
@@ -590,10 +590,10 @@
 #define _GIF_FILE_SUPPORT 1
 
 /* Define if support JPG bmp file format */
-#define _JPG_FILE_SUPPORT 1
+/* #undef _JPG_FILE_SUPPORT */
 
 /* Define if support PNG bmp file format */
-#define _PNG_FILE_SUPPORT 1
+/* #undef _PNG_FILE_SUPPORT */
 
 /* Define if provide GB2312 IME */
 #define _IME_GB2312 1
@@ -723,7 +723,7 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have a working `mmap' system call. */
-#define HAVE_MMAP 1
+/* #undef HAVE_MMAP */
 
 /* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
 /* #undef HAVE_NDIR_H */

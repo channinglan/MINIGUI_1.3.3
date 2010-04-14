@@ -1,4 +1,7 @@
 
+#define DEB printf
+
+
 void TerminateDesktop (void)
 {
 #if defined(_LITE_VERSION) && !defined(_STAND_ALONE)
@@ -811,9 +814,19 @@ static void recalc_windows_under_this (ZORDERINFO* zorder, PMAINWIN pWin, RECT* 
     PMAINWIN pTemp;
 
     // where is the hidding main window?
+#ifdef _DEBUG
+		DEB("recalc_windows_under_this\n");
+#endif    
     pNode = zorder->pTopMost;
-    while (pNode->hWnd != (HWND)pWin)
-        pNode = pNode->pNext;
+    while (pNode->hWnd != (HWND)pWin) {
+        pNode = pNode->pNext;   
+    }
+         
+
+#ifdef _DEBUG
+		DEB("ok\n");
+#endif    
+
     pAffected = pNode->pNext;
 
     while (pAffected){
@@ -2153,7 +2166,7 @@ const char* SysText [] =
 
 #if defined(_GB_SUPPORT) | defined (_GBK_SUPPORT) | defined (_GB18030_SUPPORT)
 static const char* SysText_GB [] =
-{
+{/*
     "´°¿Ú...",              // 0
     "¿ªÊ¼...",              // 1
     "Ë¢ÐÂ±³¾°",             // 2
@@ -2174,12 +2187,33 @@ static const char* SysText_GB [] =
     "ÖØÊÔ(R)",              // 17
     "ºöÂÔ(I)",              // 18
     "¹ØÓÚ MiniGUI..."       // 19
+    */
+    "Windows...",               // 0
+    "Start...",                 // 1
+    "Refresh Background",       // 2
+    "Close All Windows",        // 3
+    "End Session",              // 4
+    "Operations...",            // 5
+    "Minimize",                 // 6
+    "Maximize",                 // 7
+    "Restore",                  // 8
+    "Close",                    // 9
+    "OK",                       // 10
+    "Next",                     // 11
+    "Cancel",                   // 12
+    "Previous",                 // 13
+    "Yes",                      // 14
+    "No",                       // 15
+    "Abort",                    // 16
+    "Retry",                    // 17
+    "Ignore",                   // 18
+    "About MiniGUI...",         // 19    
 };
 #endif
 
 #ifdef _BIG5_SUPPORT
 static const char* SysText_BIG5 [] =
-{
+{/*
     "µ¡¤f...",
     "ÉÛ©l...",
     "¨ê·s­I´º",
@@ -2200,6 +2234,27 @@ static const char* SysText_BIG5 [] =
     "­«¸Õ(R)",
     "©¿²¤(I)",
     "Ãö¤_ MiniGUI..."
+    */
+    "Windows...",               // 0
+    "Start...",                 // 1
+    "Refresh Background",       // 2
+    "Close All Windows",        // 3
+    "End Session",              // 4
+    "Operations...",            // 5
+    "Minimize",                 // 6
+    "Maximize",                 // 7
+    "Restore",                  // 8
+    "Close",                    // 9
+    "OK",                       // 10
+    "Next",                     // 11
+    "Cancel",                   // 12
+    "Previous",                 // 13
+    "Yes",                      // 14
+    "No",                       // 15
+    "Abort",                    // 16
+    "Retry",                    // 17
+    "Ignore",                   // 18
+    "About MiniGUI...",         // 19    
 };
 #endif
 

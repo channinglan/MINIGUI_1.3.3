@@ -86,7 +86,7 @@ static int set_effective_clip_rect (PSD psd)
 
     if (_COOR_TRANS)
         rotatecoor (&psd->clipminx, &psd->clipminy, &psd->clipmaxx, &psd->clipmaxy, 
-                    _ROT_DIR_CCW?psd->xres:psd->yres, _ROT_DIR_CCW?0:1);
+                    _ROT_DIR_CCW?psd->yres:psd->xres, _ROT_DIR_CCW?1:0);
 
     psd->clipmaxx ++;
     psd->clipmaxy ++;
@@ -369,7 +369,7 @@ static int setclipping (GAL_GC gc, int x1, int y1, int x2, int y2)
 #endif
 
         if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd)
-            rotatecoor (&x1, &y1, &x2, &y2, _ROT_DIR_CCW?psd->xres:psd->yres, _ROT_DIR_CCW?0:1);
+            rotatecoor (&x1, &y1, &x2, &y2, _ROT_DIR_CCW?psd->yres:psd->xres, _ROT_DIR_CCW?1:0);
         
         psd->clipminx = x1;
         psd->clipminy = y1;
@@ -422,7 +422,7 @@ static int getclipping (GAL_GC gc, int* x1, int* y1, int* x2, int* y2)
 #endif
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd)
-        rotatecoor (x1, y1, x2, y2, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?1:0);
+        rotatecoor (x1, y1, x2, y2, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?0:1);
 
     return 0;
 }
@@ -560,7 +560,12 @@ static gal_pixel mapcolor (GAL_GC gc, GAL_Color *color)
         return RGB2PIXEL565 (color->r, color->g, color->b);
     case 24:
     case 32:
+// cyli fix
+#if 0
         return RGB2PIXEL888 (color->r, color->g, color->b);
+#else
+        return RGB2PIXEL888 (color->b, color->g, color->r);
+#endif
     }
     return -1;
 }
@@ -712,7 +717,7 @@ static int fillbox (GAL_GC gc, int x, int y, int w, int h, gal_pixel pixel)
     BLOCK_DRAW_SEM;
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd)
-        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
 
     if (native_gen_clipbox (gc.psd, &x, &y, &w, &h) == CLIP_INVISIBLE)
         goto ret;
@@ -731,7 +736,7 @@ static void putbox_helper (GAL_GC gc, int x, int y, int w, int h, void* buf, int
     int bpp = bytesperpixel (gc);
     gal_uint8 *tmpptr= (gal_uint8*) buf;
 
-    rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?1:0);
+    rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?0:1);
 
     if ( y < 0 ) {
         h += y;
@@ -748,18 +753,9 @@ static void putbox_helper (GAL_GC gc, int x, int y, int w, int h, void* buf, int
     if ( y + h -1 >= gc.psd->xres) 
         h = gc.psd->xres - y;
 
-    rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+    rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
 
     if (_ROT_DIR_CCW) {
-        while (h > 0) {
-            gc.psd->PutBox (gc.psd, x, y, 1, w, tmpptr);
-
-            tmpptr += pitch;
-            x--;
-            h--;
-        }
-    }
-    else {
         //char* reversi = alloca (w * bpp);
         char* reversi = malloc (w * bpp);
 
@@ -773,6 +769,14 @@ static void putbox_helper (GAL_GC gc, int x, int y, int w, int h, void* buf, int
             h--;
         }
         free (reversi);
+    } else {
+        while (h > 0) {
+            gc.psd->PutBox (gc.psd, x, y, 1, w, tmpptr);
+
+            tmpptr += pitch;
+            x--;
+            h--;
+        }
     }
 }
 
@@ -783,8 +787,7 @@ static int putbox_wrapper (GAL_GC gc, int x, int y, int w, int h, void* buf, int
     BLOCK_DRAW_SEM;
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd) {
-
-        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
 
         if (gc.psd->doclip) {
             if ((x + w - 1 < gc.psd->clipminx) || (x >= gc.psd->clipmaxx))
@@ -838,8 +841,10 @@ static int putboxmask ( GAL_GC gc, int x, int y, int w, int h, void* buf, gal_pi
 
     BLOCK_DRAW_SEM;
 
+printf("_COOR_TRANS=%d gc.psd=%d cur_gfx->phygc.psd=%d\n", _COOR_TRANS, gc.psd, cur_gfx->phygc.psd);
+
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd) {
-        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
         if (gc.psd->doclip) {
             if ((x + w - 1 < gc.psd->clipminx) || (x >= gc.psd->clipmaxx))
                 goto inv_args;
@@ -851,7 +856,7 @@ static int putboxmask ( GAL_GC gc, int x, int y, int w, int h, void* buf, gal_pi
             if ((y + h - 1 < 0) || (y >= gc.psd->yres))
                 goto inv_args;
         }
-        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?1:0);
+        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?0:1);
 
         bpp = bytesperpixel (gc);
 
@@ -870,18 +875,9 @@ static int putboxmask ( GAL_GC gc, int x, int y, int w, int h, void* buf, gal_pi
         if ( y + h -1 >= gc.psd->xres) 
             h = gc.psd->xres - y ;
 
-        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
 
         if (_ROT_DIR_CCW) {
-            while (h > 0) {
-                gc.psd->PutBoxMask (gc.psd, x, y, 1, w, tmpptr, cxx);
-    
-                tmpptr += bpp * oldw;
-                x--;
-                h--;
-            }
-        }
-        else {
             //char* reversi = alloca (w * bpp);
             char* reversi = malloc (w * bpp);
     
@@ -895,6 +891,14 @@ static int putboxmask ( GAL_GC gc, int x, int y, int w, int h, void* buf, gal_pi
                 h--;
             }
             free (reversi);
+        } else {
+            while (h > 0) {
+                gc.psd->PutBoxMask (gc.psd, x, y, 1, w, tmpptr, cxx);
+    
+                tmpptr += bpp * oldw;
+                x--;
+                h--;
+            }
         }
     }
     else {
@@ -940,18 +944,9 @@ static void getbox_helper (GAL_GC gc, int x, int y, int w, int h, void* buf, int
     if ( y + h -1 >= gc.psd->xres) 
         h = gc.psd->xres - y ;
 
-    rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+    rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
 
     if (_ROT_DIR_CCW) {
-        while (h > 0) {
-            gc.psd->GetBox (gc.psd, x, y, 1, w, tmpptr);
-
-            tmpptr += pitch;
-            x--;
-            h--;
-        }
-    }
-    else {
         //char* reversi = alloca (w * bpp);
         char* reversi = malloc (w * bpp);
 
@@ -965,6 +960,15 @@ static void getbox_helper (GAL_GC gc, int x, int y, int w, int h, void* buf, int
             h--;
         }
         free (reversi);
+    }
+    else {
+        while (h > 0) {
+            gc.psd->GetBox (gc.psd, x, y, 1, w, tmpptr);
+
+            tmpptr += pitch;
+            x--;
+            h--;
+        }
     }
 }
 
@@ -1012,8 +1016,8 @@ static int copybox (GAL_GC gc, int x, int y, int w, int h, int nx, int ny)
     if ((w <= 0) || (h <= 0)) return -1;
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd) {
-        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
-        rotaterect (&nx, &ny, &org_w, &org_h, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+        rotaterect (&x, &y, &w, &h, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
+        rotaterect (&nx, &ny, &org_w, &org_h, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
     }
 
     if ((x >= gc.psd->xres) || (x + w - 1 < 0)) return -1;
@@ -1282,8 +1286,8 @@ static int drawhline (GAL_GC gc, int x, int y, int w, gal_pixel pixel)
     BLOCK_DRAW_SEM;
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd) {
-        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
-        if (!_ROT_DIR_CCW) y -= w - 1;
+        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
+        if (_ROT_DIR_CCW) y -= w - 1;
 
         if (native_gen_clipvline (gc.psd, &x, &y, &w) == CLIP_INVISIBLE )
             goto ret;
@@ -1311,8 +1315,8 @@ static int drawvline (GAL_GC gc, int x, int y, int h, gal_pixel pixel)
     BLOCK_DRAW_SEM;
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd) {
-        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
-        if (_ROT_DIR_CCW) x -= h - 1;
+        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
+        if (!_ROT_DIR_CCW) x -= h - 1;
 
         if (native_gen_clipvline (gc.psd, &x, &y, &h) == CLIP_INVISIBLE )
             goto ret;
@@ -1341,7 +1345,7 @@ static int drawpixel (GAL_GC gc, int x, int y, gal_pixel pixel)
     BLOCK_DRAW_SEM;
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd)
-        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
 
     if (native_gen_clippoint (gc.psd, x, y)) {
         gc.psd->DrawPixel (gc.psd, x, y, pixel);
@@ -1357,7 +1361,7 @@ static int getpixel (GAL_GC gc, int x, int y, gal_pixel* pixel)
 {
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd) {
         if ((x >= 0) && (x < gc.psd->yres) && (y >= 0) && (y < gc.psd->xres)) {
-            rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+            rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
             *pixel = gc.psd->ReadPixel (gc.psd, x, y);
         } else 
             return -1;
@@ -1382,8 +1386,8 @@ static int line (GAL_GC gc, int x1, int y1, int x2, int y2, gal_pixel pixel)
     setfgcolor(gc,pixel);
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd) {
-        rotatepoint (&x1, &y1, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
-        rotatepoint (&x2, &y2, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+        rotatepoint (&x1, &y1, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
+        rotatepoint (&x2, &y2, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
     }
 
     native_gen_line (gc.psd, x1, y1, x2, y2, TRUE);
@@ -1408,7 +1412,7 @@ static int rectangle (GAL_GC gc, int l, int t, int r, int b, gal_pixel pixel)
     setfgcolor(gc,pixel);
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd)
-        rotatecoor (&l, &t, &r, &b, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+        rotatecoor (&l, &t, &r, &b, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
 
     native_gen_rect (gc.psd, l, t, r, b);
     if (gc.psd->UpdateRect) gc.psd->UpdateRect (gc.psd, l, t, r, b);
@@ -1424,7 +1428,7 @@ static int circle (GAL_GC gc, int x, int y, int r, gal_pixel pixel)
     BLOCK_DRAW_SEM;
 
     if (_COOR_TRANS && gc.psd == cur_gfx->phygc.psd)
-        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->xres:gc.psd->yres, _ROT_DIR_CCW?0:1);
+        rotatepoint (&x, &y, _ROT_DIR_CCW?gc.psd->yres:gc.psd->xres, _ROT_DIR_CCW?1:0);
     native_gen_circle (gc.psd, x, y, r, pixel);
     if (gc.psd->UpdateRect) gc.psd->UpdateRect (gc.psd, x - r, y - r, x + r, y + r);
 
@@ -1478,7 +1482,7 @@ BOOL InitNative (GFX* gfx)
 
     gfx->colors_phygc       = psd->ncolors;
     gfx->grayscale_screen = FALSE;
-    
+
     gfx->bytesperpixel      = bytesperpixel;
     gfx->bitsperpixel       = bitsperpixel;
     gfx->width              = width;

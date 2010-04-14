@@ -653,7 +653,11 @@ BOOL RefreshCursor(int* x, int* y, int* button)
     curx = *x;
     cury = *y;
     *button = IAL_GetMouseButton ();
-    if(oldx != curx || oldy != cury)
+
+//20080220 cyli fix for touch db-click
+//printf("oldx=%d curx=%d oldy=%d cury=%d *button=%d\n", oldx, curx, oldy, cury, *button);
+//    if(oldx != curx || oldy != cury)
+    if((abs(oldx - curx) > 5) || (abs(oldy - cury) > 5))
     {
 #ifdef _CURSOR_SUPPORT
         if(nShowCount >= 0 && pCurCsr) {

@@ -50,6 +50,10 @@
 /****************************** Message support ******************************/
 static BLOCKHEAP QMSGHeap;
 
+
+#define DEB(...) 
+//#define DEB printf
+
 /* QMSG allocation */
 BOOL InitFreeQMSGList (void)
 {
@@ -348,6 +352,10 @@ int GUIAPI GetMessage (PMSG pMsg, HWND hWnd)
     PMSGQUEUE pMsgQueue;
     PQMSG phead;
     int slot;
+
+//#ifdef _DEBUG
+//		DEB("1GetMessage\n");
+//#endif
 
     if( !(pMsgQueue = GetMsgQueue(hWnd)) ) return ERR_INV_HWND;
 
@@ -717,13 +725,22 @@ int GUIAPI GetMessage (PMSG pMsg, HWND hWnd)
     PQMSG phead;
     int slot;
 
+//#ifdef _DEBUG
+//		DEB("2GetMessage\n");
+//#endif
+
     if( !(pMsgQueue = GetMsgQueue(hWnd)) ) return ERR_INV_HWND;
 
     memset (pMsg, 0, sizeof(MSG));
 
 checkagain:
-
+//#ifdef _DEBUG
+	DEB("<c");
+//#endif
     if (pMsgQueue->dwState & QS_QUIT) {
+//#ifdef _DEBUG
+	DEB("-QUIT\n");
+//#endif   	
         pMsg->hwnd = hWnd;
         pMsg->message = MSG_QUIT;
         pMsg->wParam = 0;
@@ -731,65 +748,103 @@ checkagain:
         pMsg->pAdd = NULL;
 
         pMsgQueue->dwState &= ~QS_QUIT;
-        
+
         return 0;
     }
 
     if (pMsgQueue->dwState & QS_NOTIFYMSG) {
-       
+//#ifdef _DEBUG
+		DEB("NOTIFYMSG");
+//#endif        
         pthread_mutex_lock (&pMsgQueue->lock);
         if (pMsgQueue->pFirstNotifyMsg) {
+//#ifdef _DEBUG
+		DEB("-pMsgQueue->pFirstNotifyMsg\n");
+//#endif         	
             phead = pMsgQueue->pFirstNotifyMsg;
-            pMsgQueue->pFirstNotifyMsg = phead->next;
-            
+            pMsgQueue->pFirstNotifyMsg = phead->next;           
             *pMsg = phead->Msg;
             pMsg->pAdd = NULL;
-
             FreeQMSG (phead);
-
             pthread_mutex_unlock (&pMsgQueue->lock);
+             
             return 1;
         }
-        else
+        else {
+//#ifdef _DEBUG
+		DEB("-\n");
+//#endif  	
             pMsgQueue->dwState &= ~QS_NOTIFYMSG;
-        
+        }
         pthread_mutex_unlock (&pMsgQueue->lock);
     }
 
     if (pMsgQueue->dwState & QS_SYNCMSG) {
+//#ifdef _DEBUG
+		DEB("SYN");
+//#endif      	
         pthread_mutex_lock (&pMsgQueue->lock);
         if (pMsgQueue->pFirstSyncMsg) {
+//#ifdef _DEBUG
+		DEB("-First\n");
+//#endif         	
             *pMsg = pMsgQueue->pFirstSyncMsg->Msg;
             pMsg->pAdd = pMsgQueue->pFirstSyncMsg;
             pMsgQueue->pFirstSyncMsg = pMsgQueue->pFirstSyncMsg->pNext;
-
-            pthread_mutex_unlock (&pMsgQueue->lock);
+            pthread_mutex_unlock (&pMsgQueue->lock);            
             return 1;
         }
         else
             pMsgQueue->dwState &= ~QS_SYNCMSG;
-            
+//#ifdef _DEBUG
+		DEB("-\n");
+//#endif             
         pthread_mutex_unlock (&pMsgQueue->lock);
     }
 
     if (pMsgQueue->dwState & QS_POSTMSG) {
-    
+//#ifdef _DEBUG
+		DEB("QS_POSTMSG");
+//#endif     
         pthread_mutex_lock (&pMsgQueue->lock);
         if (pMsgQueue->readpos != pMsgQueue->writepos) {
-
+//#ifdef _DEBUG
+		DEB("-r != w");
+//#endif 
+//#ifdef _DEBUG
+		DEB("-pMsg=0x%x",(int)pMsg);
+		
+		DEB("-pr=0x%x",(int)pMsgQueue->readpos);
+		//DEB("-pQ=0x%x",(int)pMsgQueue->msg[pMsgQueue->readpos]);					
+//#endif 
             *pMsg = pMsgQueue->msg[pMsgQueue->readpos];
+            
+//#ifdef _DEBUG
+		DEB("-Q");
+//#endif 
+            
             CheckCapturedMouseMessage (pMsg);
+            
+//#ifdef _DEBUG
+		DEB("-Cap");
+//#endif             
             pMsg->pAdd = NULL;
 
             pMsgQueue->readpos++;
             if (pMsgQueue->readpos >= pMsgQueue->len) pMsgQueue->readpos = 0;
 
-            pthread_mutex_unlock (&pMsgQueue->lock);
+            pthread_mutex_unlock (&pMsgQueue->lock); 
+            
+//#ifdef _DEBUG
+		DEB("--end\n");
+//#endif                        
             return 1;
         }
         else
             pMsgQueue->dwState &= ~QS_POSTMSG;
-
+//#ifdef _DEBUG
+		DEB("-\n");
+//#endif 
         pthread_mutex_unlock (&pMsgQueue->lock);
     }
 
@@ -797,8 +852,13 @@ checkagain:
         PMAINWIN pHostingRoot;
         HWND hNeedPaint;
         PMAINWIN pWin;
-        
+//#ifdef _DEBUG
+		DEB("QS_PAINT");
+//#endif          
         if (hWnd == HWND_DESKTOP) {
+//#ifdef _DEBUG
+		DEB("-D_\n");
+//#endif         	
             pMsg->hwnd = hWnd;
             pMsg->message = MSG_PAINT;
             pMsg->wParam = 0;
@@ -815,24 +875,48 @@ checkagain:
         pMsg->wParam = 0;
         pMsg->lParam = 0;
         pMsg->pAdd = NULL;
-
+//#ifdef _DEBUG
+		DEB("-Q");
+//#endif 
         pWin = GetMainWindowPtrOfControl (hWnd);
+//#ifdef _DEBUG
+		DEB("-1");
+//#endif          
         pHostingRoot = msgGetHostingRoot (pWin);
-
+//#ifdef _DEBUG
+		DEB("-2");
+//#endif  
         if ( (hNeedPaint = msgCheckHostedTree (pHostingRoot)) ) {
+//#ifdef _DEBUG
+		DEB("--ChkHostedTree\n");
+//#endif          	
             pMsg->hwnd = hNeedPaint;
             pWin = (PMAINWIN) hNeedPaint;
             pMsg->lParam = (LPARAM)(&pWin->InvRgn.rgn);
+          
             return 1;
         }
-        
+//#ifdef _DEBUG
+		DEB("-3");
+//#endif        
         pthread_mutex_lock (&pMsgQueue->lock);
         pMsgQueue->dwState &= ~QS_PAINT;
         pthread_mutex_unlock (&pMsgQueue->lock);
+//#ifdef _DEBUG
+		DEB("-4\n");
+//#endif         
     }
-    
+//#ifdef _DEBUG
+		DEB("-50x%x\n",pMsgQueue->dwState);
+//#endif      
     if (pMsgQueue->dwState & QS_TIMER) {
+//#ifdef _DEBUG
+		DEB("QT");
+//#endif    	
         if (hWnd == HWND_DESKTOP) {
+//#ifdef _DEBUG
+		DEB("-D\n");
+//#endif        	
             pMsg->hwnd = hWnd;
             pMsg->message = MSG_TIMER;
             pMsg->wParam = 0;
@@ -842,7 +926,6 @@ checkagain:
             pthread_mutex_lock (&pMsgQueue->lock);
             pMsgQueue->dwState &= ~0x01;
             pthread_mutex_unlock (&pMsgQueue->lock);
-
             return 1;
         }
         
@@ -853,10 +936,16 @@ checkagain:
         }
 
         if (slot == DEF_NR_TIMERS) {
+//#ifdef _DEBUG
+		DEB("==DEF_NR_TIMERS");
+//#endif        	
             pMsgQueue->dwState &= ~QS_TIMER;
             pthread_mutex_unlock (&pMsgQueue->lock);
         }
         else {
+//#ifdef _DEBUG
+		DEB("!=DEF_NR_TIMERS\n");
+//#endif        	
             pMsg->hwnd = pMsgQueue->TimerOwner[slot];
             pMsg->message = MSG_TIMER;
             pMsg->wParam = pMsgQueue->TimerID[slot];
@@ -865,15 +954,26 @@ checkagain:
 
             pMsgQueue->dwState &= ~(0x01 << slot);
             pthread_mutex_unlock (&pMsgQueue->lock);
-
             return 1;
         }
+//#ifdef _DEBUG
+		DEB("-\n");
+//#endif         
     }
-
+//#ifdef _DEBUG
+	DEB("w>");
+//#endif
     // no message, wait again.
     sem_wait (&pMsgQueue->wait);
+//#ifdef _DEBUG
+	DEB("c>");
+//#endif
     goto checkagain;
 
+//#ifdef _DEBUG
+//		DEB("2GetMessage end\n");
+//#endif
+	DEB("mg\n");
     return 1;
 }
 

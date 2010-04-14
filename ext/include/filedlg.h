@@ -127,7 +127,8 @@ int OpenFileDialogEx (HWND hWnd, int lx, int ty, int w, int h, PFILEDLGDATA pmwf
 static inline int OpenFileDialog (HWND hWnd, BOOL isSave, PFILEDLGDATA pmwfi)
 {
     pmwfi->IsSave = isSave;
-    return OpenFileDialogEx (hWnd, 50, 50, 330, 280, pmwfi);
+    return OpenFileDialogEx (hWnd, 0, 0, g_rcScr.right, g_rcScr.bottom, pmwfi);
+//    return OpenFileDialogEx (hWnd, 50, 50, 330, 280, pmwfi);
 }
 
     /** @} end of mywins_filedlg */

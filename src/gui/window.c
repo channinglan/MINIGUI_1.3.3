@@ -2306,26 +2306,15 @@ int DefaultMainWinProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
 {
     PMAINWIN pWin = (PMAINWIN)hWnd;
 
-    if (message >= MSG_FIRSTMOUSEMSG && message <= MSG_NCMOUSEOFF)
-        return DefaultMouseMsgHandler(pWin, message, 
-            wParam, LOSWORD (lParam), HISWORD (lParam));
-    else if (message > MSG_NCMOUSEOFF && message <= MSG_LASTMOUSEMSG)
-        return DefaultNCMouseMsgHandler(pWin, message, 
-            (int)wParam, LOSWORD (lParam), HISWORD (lParam));
-    else if (message >= MSG_FIRSTKEYMSG && message <= MSG_LASTKEYMSG)
-        return DefaultKeyMsgHandler(pWin, message, wParam, lParam);
-    else if (message >= MSG_FIRSTPOSTMSG && message <= MSG_LASTPOSTMSG)
-        return DefaultPostMsgHandler(pWin, message, wParam, lParam);
-    else if (message >= MSG_FIRSTCREATEMSG && message <= MSG_LASTCREATEMSG) 
-        return DefaultCreateMsgHandler(pWin, message, wParam, lParam);
-    else if (message >= MSG_FIRSTPAINTMSG && message <= MSG_LASTPAINTMSG) 
-        return DefaultPaintMsgHandler(pWin, message, wParam, lParam);
-    else if (message >= MSG_FIRSTSESSIONMSG && message <= MSG_LASTSESSIONMSG) 
-        return DefaultSessionMsgHandler(pWin, message, wParam, lParam);
-    else if (message >= MSG_FIRSTCONTROLMSG && message <= MSG_LASTCONTROLMSG) 
-        return DefaultControlMsgHandler(pWin, message, wParam, lParam);
-    else if (message >= MSG_FIRSTSYSTEMMSG && message <= MSG_LASTSYSTEMMSG) 
-        return DefaultSystemMsgHandler(pWin, message, wParam, lParam);
+    if      (message >= MSG_FIRSTMOUSEMSG   && message <= MSG_NCMOUSEOFF)	return DefaultMouseMsgHandler(pWin, message, wParam, LOSWORD (lParam), HISWORD (lParam));
+    else if (message >  MSG_NCMOUSEOFF      && message <= MSG_LASTMOUSEMSG)	return DefaultNCMouseMsgHandler(pWin, message, (int)wParam, LOSWORD (lParam), HISWORD (lParam));
+    else if (message >= MSG_FIRSTKEYMSG     && message <= MSG_LASTKEYMSG)	return DefaultKeyMsgHandler(pWin, message, wParam, lParam);
+    else if (message >= MSG_FIRSTPOSTMSG    && message <= MSG_LASTPOSTMSG)	return DefaultPostMsgHandler(pWin, message, wParam, lParam);
+    else if (message >= MSG_FIRSTCREATEMSG  && message <= MSG_LASTCREATEMSG) 	return DefaultCreateMsgHandler(pWin, message, wParam, lParam);
+    else if (message >= MSG_FIRSTPAINTMSG   && message <= MSG_LASTPAINTMSG) 	return DefaultPaintMsgHandler(pWin, message, wParam, lParam);
+    else if (message >= MSG_FIRSTSESSIONMSG && message <= MSG_LASTSESSIONMSG) 	return DefaultSessionMsgHandler(pWin, message, wParam, lParam);
+    else if (message >= MSG_FIRSTCONTROLMSG && message <= MSG_LASTCONTROLMSG) 	return DefaultControlMsgHandler(pWin, message, wParam, lParam);
+    else if (message >= MSG_FIRSTSYSTEMMSG  && message <= MSG_LASTSYSTEMMSG) 	return DefaultSystemMsgHandler(pWin, message, wParam, lParam);
 
     return 0;
 }

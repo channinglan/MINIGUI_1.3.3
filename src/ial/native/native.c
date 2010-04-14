@@ -69,7 +69,7 @@ static int mouse_update(void)
     int dx,dy,dz;
     int r;
     int sign;
-    
+
     if (!mousedev)
         return 0;
 
@@ -113,11 +113,11 @@ static void mouse_getxy (int* x, int* y)
 {
 #ifdef _COOR_TRANS
 #if _ROT_DIR_CCW
-    *x = ypos;
-    *y = maxx - xpos;
+    *y = ypos;//maxy - ypos;
+    *x = xpos;//maxx - xpos;
 #else
-    *x = maxy - ypos;
-    *y = xpos;
+    *y = ypos;
+    *x = xpos;
 #endif
 #else
     *x = xpos;
@@ -382,8 +382,8 @@ found:
     minx = 0;
     miny = 0;
 #ifdef _COOR_TRANS
-    maxx = HEIGHTOFPHYGC - 1;
-    maxy = WIDTHOFPHYGC - 1;
+    maxx = WIDTHOFPHYGC - 1;
+    maxy = HEIGHTOFPHYGC - 1;
 #else
     maxx = WIDTHOFPHYGC - 1;
     maxy = HEIGHTOFPHYGC - 1;

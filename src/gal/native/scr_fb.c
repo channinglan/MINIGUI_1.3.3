@@ -64,6 +64,36 @@ static short saved_blue[16];
 static int tty = -1;
 #endif
 
+//20080219 cyli fix
+/* Small wrapper for mmap() so we can play nicely with no-mmu hosts
+ * (non-mmu hosts disallow the MAP_SHARED flag) */
+static void *do_mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset)
+{
+#if 0
+	void *ret;
+	ret = mmap(start, length, prot, flags, fd, offset);
+	if ( ret == (char *)-1 && (flags & MAP_SHARED) ) 
+		ret = mmap(start, length, prot, (flags & ~MAP_SHARED) | MAP_PRIVATE, fd, offset);
+
+	return ret;
+#else
+// cyli fix for cache
+	void *ret;
+	int fb_fd;
+
+	if ((fb_fd = open ("/dev/mem", O_RDWR | O_SYNC)) < 0) {
+		printf("Can't open %s, fd = %d\n", "/dev/mem", fb_fd);
+		return NULL;
+	}
+
+	ret = mmap(start, length, prot, flags, fb_fd, 0x80000000);
+	close(fb_fd);
+
+	return ret;
+#endif
+}
+
+
 /* init framebuffer*/
 static PSD fb_open(PSD psd)
 {
@@ -203,15 +233,19 @@ static PSD fb_open(PSD psd)
 	    }
     }
 #endif
-
 	/* mmap framebuffer into this address space*/
 	psd->size = (psd->size + getpagesize () - 1)
 			/ getpagesize () * getpagesize ();
 #ifdef __uClinux__
-	psd->addr = mmap(NULL, psd->size, PROT_READ | PROT_WRITE, 0, fb, 0);
+//cyli fix 20080219
+//	psd->addr = mmap(NULL, psd->size, PROT_READ | PROT_WRITE, 0, fb, 0);
+	psd->addr = do_mmap(NULL, psd->size, PROT_READ | PROT_WRITE, 0, fb, 0);
 #else
-	psd->addr = mmap(NULL, psd->size, PROT_READ | PROT_WRITE, MAP_SHARED, fb, 0);
+//cyli fix 20080219
+//	psd->addr = mmap(NULL, psd->size, PROT_READ | PROT_WRITE, MAP_SHARED, fb, 0);
+	psd->addr = do_mmap(NULL, psd->size, PROT_READ | PROT_WRITE, MAP_SHARED, fb, 0);
 #endif
+//	printf("cyli test  mmap psd->addr=%x psd->size=%x \n", psd->addr, psd->size);
 	if(psd->addr == NULL || psd->addr == (unsigned char *)-1) {
 		fprintf(stderr,"GAL fbcon engine: Error when mmaping %s: %m\n", env);
 		goto fail;

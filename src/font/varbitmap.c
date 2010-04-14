@@ -245,7 +245,9 @@ static const void* get_char_bitmap (LOGFONT* logfont, DEVFONT* devfont,
 }
 
 /**************************** Global data ************************************/
-static FONTOPS var_bitmap_font_ops = {
+//cyli fix
+//static FONTOPS var_bitmap_font_ops = {
+FONTOPS var_bitmap_font_ops = {
     get_char_width,
     get_str_width,
     get_ave_width,
